@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya|Taviraj|Trirong" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/base.css">
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/Matter/demo/js/lib/pathseg.js"></script>
+    <script src="bower_components/Matter/build/matter.js"></script>
+    <script src="static/js/lib/poly-decomp/build/decomp.js"></script>
+
+    <title></title>
+</head>
+<body>
+<canvas id="piece"></canvas>
+    <div class="start_app">
+        <button class="gt_bt">Start</button>
+        <button class="gt_bt">Quick learning</button>
+    </div>
+    <div class="main_container">
+        <canvas id="kaleidoscope" width="1000" height="1000"></canvas>
+        <!--<img src="static/img/main.png">-->
+    </div>
+    <div class="rotation_pattern">
+        <!--<div class="stencil"></div>-->
+        <div class="rotation_platform" id="particles_container"></div>
+        <div class="rotate_left"><button id="rotate_left_bt">Left</button></div>
+        <div class="rotate_right"><button id="rotate_right_bt">Right</button></div>
+        <div class="temp_bt"><button id="get_current_piece">GetPiece</button></div>
+    </div>
+    <div class="right_settings_panel"></div>
+    <div class="left_settings_panel"></div>
+<script src="static/js/app.js"></script>
+</body>
+</html>

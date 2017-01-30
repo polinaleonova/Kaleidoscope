@@ -1,0 +1,20 @@
+{
+  "name": "Kaleidoscope",
+  "authors": [
+    "Polina Leonova"
+  ],
+  "description": "Imitation of kaleidoscope effect",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}
