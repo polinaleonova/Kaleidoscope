@@ -143,35 +143,84 @@ $(document).ready(function() {
         piece_canvas.height = 159;
     var kaleidoscope_canvas = document.getElementById('kaleidoscope'),
         kaleidoscope_ctx = kaleidoscope_canvas.getContext('2d');
-//        kaleidoscope_ctx.translate(200, 200);
+    getImageFromEngine = function () {
+    };
+    kaleidoscope_ctx.translate(500, 200);
 
     $('#get_current_piece').click(function () {
         //clipping the party of engine_canvas image to piece_canvas
-//        piece_ctx.clearRect(0,0 ,piece_canvas.width, piece_canvas.height)
-            piece_ctx.moveTo(0, 159);
-            piece_ctx.lineTo(91.799, 0);
-            piece_ctx.lineTo(183.598, 159);
-            piece_ctx.clip();
+
+        piece_ctx.clearRect(0,0 ,piece_canvas.width, piece_canvas.height);
+        kaleidoscope_ctx.clearRect(-200,-200 ,kaleidoscope_canvas.width, kaleidoscope_canvas.height);
+        piece_ctx.beginPath();
+        piece_ctx.moveTo(0, 159);
+        piece_ctx.lineTo(91.799, 0);
+        piece_ctx.lineTo(183.598, 159);
+        piece_ctx.clip();
         var engine_image = engine_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+
         //this piece will be dublicated across all kaleidoscope conteiner
 
         var current_img = new Image();
         current_img.src = engine_image;
         current_img.onload = function(){
             piece_ctx.drawImage(current_img, 58.201, 44, 183.598, 159, 0, 0, 183.598, 159);
-        };
-        //2
-        var piece_image = piece_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
-var piece_img = new Image();
-        piece_img.src = piece_image;
-//        kaleidoscope_ctx.clearRect(0,0 ,kaleidoscope_canvas.width, kaleidoscope_canvas.height)
-        piece_img.onload = function(){
+            //2
+            var piece_image = piece_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            var piece_img = new Image();
+            piece_img.src = piece_image;
+            piece_img.onload = function(){
 
-        kaleidoscope_ctx.drawImage(piece_img,0,0);
+                for (var i=0; i<3; i++){
+                    kaleidoscope_ctx.scale(1, -1);
+                    kaleidoscope_ctx.drawImage(piece_img,0,0,184,159,-91.799,0,184,159);
+                    kaleidoscope_ctx.rotate(-120* Math.PI / 180);
+                    kaleidoscope_ctx.scale(1, -1);
+                }
+                for (var i=0; i<3; i++){
+                    kaleidoscope_ctx.drawImage(piece_img,0,0,184,159,-91.799,0,184,159);
+                    kaleidoscope_ctx.rotate(-120* Math.PI / 180);
+                }
+                for (var i=0; i< 6; i++){
+                    kaleidoscope_ctx.drawImage(piece_img,0,0,184,159,458.995,0,184,159);
+
+                    kaleidoscope_ctx.rotate(-60* Math.PI / 180);
+                }
+            };
         };
+
     });
 
 //Events.on(engine, "afterUpdate", getImageFromEngine)
 
 //end getting the image from current state of particles area
 });
+//
+//
+//    getImageFromEngine = function () {
+//    };
+//
+//        var kaleidoscope_canvas = document.getElementById('kaleidoscope');
+//        var kaleidoscope_ctx = kaleidoscope_canvas.getContext('2d');
+//        kaleidoscope_ctx.translate(200, 200);
+//
+//    $('#get_current_piece').click(function () {
+//        var canvas = document.getElementsByTagName('canvas')[1];
+//        var ctx = canvas.getContext('2d');
+//        var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+//
+//        var current_img = new Image();
+//
+//        current_img.width = 200;
+//        current_img.height = 200;
+//        current_img.src = image;
+//        current_img.onload = function(){
+//            kaleidoscope_ctx.beginPath();
+//            kaleidoscope_ctx.moveTo(-92, 159);
+//            kaleidoscope_ctx.lineTo(0, 0);
+//            kaleidoscope_ctx.lineTo(92, 159);
+//                    kaleidoscope_ctx.fill();
+//            kaleidoscope_ctx.rotate(-60* Math.PI / 180);
+//
+//        };
+//    });
