@@ -15,7 +15,8 @@ $(document).ready(function() {
         interval_particles_creation,
         mouseUp = false,
         mouseDown = false,
-        offset = 10,
+        engine_canvas_w_h = 300,
+
         color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58', '#E6F73C']),
         frame_options = {
             isStatic: true,
@@ -26,8 +27,8 @@ $(document).ready(function() {
         },
         render_options = {
             wireframes: false,
-            width: 300,
-            height: 300
+            width: engine_canvas_w_h,
+            height: engine_canvas_w_h
         };
 
 // create an engine
@@ -43,10 +44,14 @@ $(document).ready(function() {
                                    options: render_options,
                                    engine: engine
                                });
-    var top_rectangle = Bodies.rectangle(150, 44, 212, 1, frame_options),
-        bottom_rectangle = Bodies.rectangle(150, 256, 212, 1, frame_options),
-        right_rectangle = Bodies.rectangle(256, 150, 1, 212, frame_options),
-        left_rectangle = Bodies.rectangle(44, 150, 1, 212, frame_options),
+    var rectangle_w = (engine_canvas_w_h/2)*Math.sqrt(2), // 212
+        rectangle_x0_y0 = (engine_canvas_w_h-rectangle_w)/ 2, //44
+        rectangle_x1_y1 = rectangle_x0_y0 + rectangle_w, //256
+        rectangle_h = 1;
+    var top_rectangle = Bodies.rectangle(engine_canvas_w_h/2,rectangle_x0_y0 , rectangle_w, rectangle_h, frame_options),
+        bottom_rectangle = Bodies.rectangle(engine_canvas_w_h/2, rectangle_x1_y1, rectangle_w, rectangle_h, frame_options),
+        right_rectangle = Bodies.rectangle(rectangle_x1_y1, engine_canvas_w_h/2, rectangle_h, rectangle_w, frame_options),
+        left_rectangle = Bodies.rectangle(rectangle_x0_y0, engine_canvas_w_h/2, rectangle_h, rectangle_w, frame_options),
 
         rectangle_frame = Body.create({
                                           parts: [top_rectangle, bottom_rectangle, right_rectangle, left_rectangle],
@@ -108,11 +113,11 @@ $(document).ready(function() {
 
     rotateFrameLeft = function () {
         var degrees = 0.02;
-        Composite.rotate(rectangle_frame_composite, degrees, {x: 150, y: 150});
+        Composite.rotate(rectangle_frame_composite, degrees, {x: engine_canvas_w_h/2, y: engine_canvas_w_h/2});
     };
     rotateFrameRight = function () {
         var degrees = -0.02;
-        Composite.rotate(rectangle_frame_composite, degrees, {x: 150, y: 150})
+        Composite.rotate(rectangle_frame_composite, degrees, {x: engine_canvas_w_h/2, y: engine_canvas_w_h/2})
     };
     left_btn.mouseover(function () {
         interval_rotation_frame_left = setInterval(function () {
@@ -136,26 +141,32 @@ $(document).ready(function() {
 //getting the image from current state of particles area
     getImageFromEngine = function () {
     };
-
-    var piece_canvas = document.getElementById('piece'),
-        piece_ctx = piece_canvas.getContext('2d');
-        piece_canvas.width = 183.598;
-        piece_canvas.height = 159;
+    var radius_ins_circle = rectangle_w/2; //106
+//    var piece_canvas = document.getElementById('piece'),
+    var piece_canvas = document.createElement('canvas');
+        piece_canvas.setAttribute("id", "piece");
+    var piece_ctx = piece_canvas.getContext('2d');
+        piece_canvas.width = radius_ins_circle*Math.sqrt(3); //triangle width 183
+        piece_canvas.height = piece_canvas.width*Math.sqrt(3)/2;  //triangle height 159
+    var piece_width  = piece_canvas.width,
+        piece_height = piece_canvas.height;
     var kaleidoscope_canvas = document.getElementById('kaleidoscope'),
         kaleidoscope_ctx = kaleidoscope_canvas.getContext('2d');
+
     getImageFromEngine = function () {
     };
-    kaleidoscope_ctx.translate(500, 200);
-
     $('#get_current_piece').click(function () {
         //clipping the party of engine_canvas image to piece_canvas
-
+        kaleidoscope_canvas.width = $(document).width();
+        kaleidoscope_canvas.height = $(document).height();
+        //clearing canvases
         piece_ctx.clearRect(0,0 ,piece_canvas.width, piece_canvas.height);
-        kaleidoscope_ctx.clearRect(-200,-200 ,kaleidoscope_canvas.width, kaleidoscope_canvas.height);
+        kaleidoscope_ctx.clearRect(0, 0,kaleidoscope_canvas.width, kaleidoscope_canvas.height);
+
         piece_ctx.beginPath();
-        piece_ctx.moveTo(0, 159);
-        piece_ctx.lineTo(91.799, 0);
-        piece_ctx.lineTo(183.598, 159);
+        piece_ctx.moveTo(0, piece_canvas.height);
+        piece_ctx.lineTo(piece_width/2, 0);
+        piece_ctx.lineTo(piece_width, piece_canvas.height);
         piece_ctx.clip();
         var engine_image = engine_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 
@@ -164,28 +175,50 @@ $(document).ready(function() {
         var current_img = new Image();
         current_img.src = engine_image;
         current_img.onload = function(){
-            piece_ctx.drawImage(current_img, 58.201, 44, 183.598, 159, 0, 0, 183.598, 159);
+            piece_ctx.drawImage(current_img, 58.201, 44, piece_width, piece_height, 0, 0, piece_width, piece_height);
             //2
             var piece_image = piece_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
             var piece_img = new Image();
             piece_img.src = piece_image;
+
+            createHexagon = function(point){
+                kaleidoscope_ctx.save();
+                kaleidoscope_ctx.translate(point[0], point[1]);
+                for (var i=0; i<3; i++){
+                    kaleidoscope_ctx.scale(1, -1);
+                    kaleidoscope_ctx.drawImage(piece_img, 0, 0, piece_width,piece_height, -piece_width/2,0, piece_width, piece_height);
+                    kaleidoscope_ctx.rotate(-120* Math.PI / 180);
+                    kaleidoscope_ctx.scale(1, -1);
+                }
+                for (var j=0; j<3; j++){
+                    kaleidoscope_ctx.drawImage(piece_img, 0, 0, piece_width, piece_height, -piece_width/2, 0, piece_width, piece_height);
+                    kaleidoscope_ctx.rotate(-120* Math.PI / 180);
+                }
+                kaleidoscope_ctx.restore();
+            };
             piece_img.onload = function(){
+                getCoordinatesOfHexagons = function () {
+                    var coordinates_list = [];
+                    var count_of_triangles_on_x_axis = Math.round(kaleidoscope_canvas.width/piece_width);
 
-                for (var i=0; i<3; i++){
-                    kaleidoscope_ctx.scale(1, -1);
-                    kaleidoscope_ctx.drawImage(piece_img,0,0,184,159,-91.799,0,184,159);
-                    kaleidoscope_ctx.rotate(-120* Math.PI / 180);
-                    kaleidoscope_ctx.scale(1, -1);
-                }
-                for (var i=0; i<3; i++){
-                    kaleidoscope_ctx.drawImage(piece_img,0,0,184,159,-91.799,0,184,159);
-                    kaleidoscope_ctx.rotate(-120* Math.PI / 180);
-                }
-                for (var i=0; i< 6; i++){
-                    kaleidoscope_ctx.drawImage(piece_img,0,0,184,159,458.995,0,184,159);
-
-                    kaleidoscope_ctx.rotate(-60* Math.PI / 180);
-                }
+                    var count_of_triangles_on_y_axis = Math.round(kaleidoscope_canvas.height/piece_height);
+                    console.log(count_of_triangles_on_x_axis, count_of_triangles_on_y_axis);
+                    for (var i = 0; i < count_of_triangles_on_x_axis; i++) {
+                        for (var j = 0; j < count_of_triangles_on_y_axis; j++) {
+                            if ((i % 3 == 0) && (j % 2 == 0)) {
+                                coordinates_list.push([piece_width *i, piece_height *j])
+                            }
+                            if (!(j % 2 == 0) && (i % 3 == 0)){
+                                coordinates_list.push([piece_width *(i+1.5), piece_height*j])
+                            }
+                        }
+                    }
+                    return coordinates_list
+                };
+                var hexagons_map_coordinates = getCoordinatesOfHexagons()
+                $.each(hexagons_map_coordinates, function(index, point){
+                    createHexagon(point)
+                });
             };
         };
 
@@ -195,32 +228,7 @@ $(document).ready(function() {
 
 //end getting the image from current state of particles area
 });
-//
-//
-//    getImageFromEngine = function () {
-//    };
-//
-//        var kaleidoscope_canvas = document.getElementById('kaleidoscope');
-//        var kaleidoscope_ctx = kaleidoscope_canvas.getContext('2d');
-//        kaleidoscope_ctx.translate(200, 200);
-//
-//    $('#get_current_piece').click(function () {
-//        var canvas = document.getElementsByTagName('canvas')[1];
-//        var ctx = canvas.getContext('2d');
-//        var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-//
-//        var current_img = new Image();
-//
-//        current_img.width = 200;
-//        current_img.height = 200;
-//        current_img.src = image;
-//        current_img.onload = function(){
-//            kaleidoscope_ctx.beginPath();
-//            kaleidoscope_ctx.moveTo(-92, 159);
-//            kaleidoscope_ctx.lineTo(0, 0);
-//            kaleidoscope_ctx.lineTo(92, 159);
-//                    kaleidoscope_ctx.fill();
-//            kaleidoscope_ctx.rotate(-60* Math.PI / 180);
-//
-//        };
-//    });
+
+
+
+

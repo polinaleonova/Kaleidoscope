@@ -18,14 +18,15 @@ $color-font-hover: #eea807;
     background-color: aquamarine;
 }
 .rotation_platform{
-    position: relative;
+//    position: relative;
+  position: absolute;
     width: 300px;
     height: 300px;
 }
 .rotation_pattern
 {
-  position: absolute;
-  bottom: 0;
+//  position: absolute;
+//  bottom: 0;
 }
 .main_container{
   position: absolute;
@@ -33,18 +34,7 @@ $color-font-hover: #eea807;
   height: 100%;
   background-color: navajowhite;
 }
-//#piece{
-//  position: relative;
-//  left: -92px;
-//}
-//#piece{
-//position: absolute;
-//    left: -92px;
-//}
-//.stencil{
-//  width: 300px;
-//    height: 300px;
-//    z-index: 10;
-//    background-image: url('../img/mask.png');
-////    position: absolute;
-//}
+.rotate_left, .rotate_right, .temp_bt{
+  position: relative;
+
+}
