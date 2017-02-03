@@ -141,17 +141,19 @@ $(document).ready(function() {
     var radius_ins_circle = rectangle_w/2; //106
     var piece_canvas = document.createElement('canvas');
     var piece_ctx = piece_canvas.getContext('2d');
-        piece_canvas.setAttribute("id", "piece");
+        piece_canvas.setAttribute("id", "triangle_piece");
         piece_canvas.width = radius_ins_circle*Math.sqrt(3); //triangle width 183
         piece_canvas.height = piece_canvas.width*Math.sqrt(3)/2;  //triangle height 159
     var piece_width  = piece_canvas.width,
         piece_height = piece_canvas.height;
 
-//    var hexagon_canvas = document.createElement('canvas');
-//    var hexagon_ctx = hexagon_canvas.getContext('2d');
-//        hexagon_canvas.setAttribute("id", "hexagon_piece");
-//        hexagon_canvas.width = piece_width*2; //hexagon width 366
-//        hexagon_canvas.height = piece_height*2;  //hexagon height 318
+    var hexagon_canvas = document.createElement('canvas');
+    var hexagon_ctx = hexagon_canvas.getContext('2d');
+        hexagon_canvas.setAttribute("id", "hexagon_piece");
+        hexagon_canvas.width = piece_width*2; //hexagon width 366
+        hexagon_canvas.height = piece_height*2;  //hexagon height 318
+    var hexagon_piece_width = hexagon_canvas.width,
+        hexagon_piece_height = hexagon_canvas.height;
 
     var kaleidoscope_canvas = document.getElementById('kaleidoscope'),
         kaleidoscope_ctx = kaleidoscope_canvas.getContext('2d');
@@ -180,82 +182,72 @@ $(document).ready(function() {
             return coordinates_list
         };
 
-        createHexagon = function(point, piece_img){
-        /**
-        * Description: take coordinates of the hexagon's center and image with triangle.
-        * Add in kaleidoscope field  two triangles: 1'st with existed image and 2'nd with reversed copy of image.
-        * Rotate even triangle around the center point and draw it
-        * @param {array} point: list with x and y for hexagon's center
-        * @param {number} piece_img: an element to draw into the context. The specification permits any canvas image source (CanvasImageSource).
-        * @return none
-        */
-            kaleidoscope_ctx.save();
-            kaleidoscope_ctx.translate(point[0], point[1]);
+createHexagon = function(point,hexagon_img){
+    kaleidoscope_ctx.save();
+    kaleidoscope_ctx.translate(point[0],point[1]);
+    kaleidoscope_ctx.drawImage(hexagon_img, 0, 0, hexagon_piece_width,hexagon_piece_height, -hexagon_piece_width/2,-hexagon_piece_height/2, hexagon_piece_width, hexagon_piece_height);
+    kaleidoscope_ctx.restore()
+}
+    createIntermediateHexagon = function(triangle_img){
+        var hexagons_map_coordinates = getCoordinatesOfHexagons()
+            hexagon_ctx.clearRect(0,0,hexagon_piece_width,hexagon_piece_height)
+//            console.log(triangle_img)
+            hexagon_ctx.save();
+            hexagon_ctx.translate(183, 159);
             for (var i=0; i<3; i++){
-                kaleidoscope_ctx.scale(1, -1);
-                kaleidoscope_ctx.drawImage(piece_img, 0, 0, piece_width,piece_height, -piece_width/2,0, piece_width, piece_height);
-                kaleidoscope_ctx.rotate(-120* Math.PI / 180);
-                kaleidoscope_ctx.scale(1, -1);
+                hexagon_ctx.scale(1, -1);
+                hexagon_ctx.drawImage(triangle_img, 0, 0, piece_width,piece_height, -piece_width/2,0, piece_width, piece_height);
+                hexagon_ctx.rotate(-120* Math.PI / 180);
+                hexagon_ctx.scale(1, -1);
             }
             for (var j=0; j<3; j++){
-                kaleidoscope_ctx.drawImage(piece_img, 0, 0, piece_width, piece_height, -piece_width/2, 0, piece_width, piece_height);
-                kaleidoscope_ctx.rotate(-120* Math.PI / 180);
+                hexagon_ctx.drawImage(triangle_img, 0, 0, piece_width, piece_height, -piece_width/2, 0, piece_width, piece_height);
+                hexagon_ctx.rotate(-120* Math.PI / 180);
             }
-            kaleidoscope_ctx.restore();
+            var hexagon_img = new Image(); // here will be saving engine image
+                hexagon_img.src = hexagon_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                hexagon_img.onload = function() {
+                    $.each(hexagons_map_coordinates, function (index, point) {
+                        createHexagon(point, hexagon_img)
+                    })
+                };
+            hexagon_ctx.restore();
         };
 
-        updateKaleidoscopeImg = function(){
-        /**
-        * Description:
-        * @return none
-        */
-        //clearing canvases
-        piece_ctx.clearRect(0,0 ,piece_canvas.width, piece_canvas.height);
-//        kaleidoscope_ctx.clearRect(0, 0,kaleidoscope_canvas.width, kaleidoscope_canvas.height);
-        //creation triangle part of kaleidoscope which will
-        // be dublicated across all kaleidoscope container with function createHexagon
-        piece_ctx.beginPath();
-        piece_ctx.moveTo(0, piece_canvas.height);
-        piece_ctx.lineTo(piece_width/2, 0);
-        piece_ctx.lineTo(piece_width, piece_canvas.height);
-        // clipping the part of engine_canvas image to piece_canvas
-        piece_ctx.clip();
-        var engine_image = engine_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        var current_img = new Image(); // here will be saving triangle image
-        current_img.src = engine_image;
-        current_img.onload = function(){
-            piece_ctx.drawImage(current_img, 58.201, 44, piece_width, piece_height, 0, 0, piece_width, piece_height);
-            //2
-            var piece_image = piece_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            var piece_img = new Image();
-            piece_img.src = piece_image;
-
-
-            piece_img.onload = function(){
-
-                var hexagons_map_coordinates = getCoordinatesOfHexagons()
-                $.each(hexagons_map_coordinates, function(index, point){
-                    createHexagon(point,piece_img)
-                });
-            };
-        };
-
-    };
+updateKaleidoscopeImgFromEngine = function(){
+    var engine_img = new Image(); // here will be saving engine image
+    engine_img.src = engine_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    engine_img.onload = function (){
+        createIntermediateTriangle(engine_img)
+    }
+};
+createIntermediateTriangle = function(current_img){
+    //clearing canvases
+    piece_ctx.clearRect(0,0 ,piece_canvas.width, piece_canvas.height);
+     //creation triangle part of kaleidoscope which will
+    // be dublicated across all kaleidoscope container with function createHexagon
+    piece_ctx.beginPath();
+    piece_ctx.moveTo(0, piece_canvas.height);
+    piece_ctx.lineTo(piece_width/2, 0);
+    piece_ctx.lineTo(piece_width, piece_canvas.height);
+    // clipping the part of engine_canvas image to piece_canvas
+    piece_ctx.clip();
+    piece_ctx.drawImage(current_img, 58.201, 44, piece_width, piece_height, 0, 0, piece_width, piece_height);
+    var triangle_piece_img = new Image();
+    triangle_piece_img.src = piece_canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    triangle_piece_img.onload = function() {
+        createIntermediateHexagon(triangle_piece_img)
+    }
+};
 //    $('#get_current_piece').click(updateKaleidoscopeImg);
     $( window ).resize(function() {
         kaleidoscope_canvas.width = $(document).width();
         kaleidoscope_canvas.height = $(document).height();
-        updateKaleidoscopeImg()
+        updateKaleidoscopeImgFromEngine()
     });
-var counter = 0;
 Events.on(engine, "beforeUpdate", function(){
-    counter += 1;
-
-        if (counter === 5){
-            counter = 0;
-            updateKaleidoscopeImg()
-        }
-})
+     updateKaleidoscopeImgFromEngine()
+});
 
 //end getting the image from current state of particles area
 });
