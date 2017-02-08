@@ -1,5 +1,6 @@
 @import "compass";
 
+
 $font-base-family: 'Alegreya', cursive;
 $color-font-base: #ee6300;
 $color-font-hover: #eea807;
@@ -7,34 +8,121 @@ $color-font-hover: #eea807;
 @mixin font-base($size) {
   font: $size $font-base-family;
 }
-
+@keyframes hide_panel{
+  0%{
+    width: 300px;
+  }
+  100%{
+    width: 0px;
+  }
+}
+@keyframes show_panel{
+  0%{
+    width: 0px;
+  }
+  100%{
+    width: 300px;
+  }
+}
+@keyframes show_bottom_panel{
+  0%{
+    height: 0px;
+  }
+  100%{
+    height: 300px;
+  }
+}
+@keyframes hide_bottom_panel{
+  0%{
+    height: 300px;
+  }
+  100%{
+    height: 0px;
+  }
+}
+html{
+  height: 100%;
+  overflow: hidden;
+}
+body{
+  margin: 0;
+}
 .start_app{
   background-color: #000000;
 }
-.element{
-    transform: rotateZ(30deg);
-    height: 100px;
-    width: 100px;
-    background-color: aquamarine;
-}
+//.element{
+//    transform: rotateZ(30deg);
+//    height: 100px;
+//    width: 100px;
+//    background-color: aquamarine;
+//}
 .rotation_platform{
 //    position: relative;
+  height: inherit;
   position: absolute;
-    width: 300px;
-    height: 300px;
+  width: 300px;
+  right: 10%;
 }
-.rotation_pattern{
-//  position: absolute;
-//  bottom: 0;
+.bottom_panel{
+  z-index: 2;
+  position: absolute;
+  bottom: 0px;
+  height: inherit;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.92);
 }
 .main_container{
   position: absolute;
   width: 100%;
-  height: 100%;
-  background-color: navajowhite;
+  height: inherit;
+  top:0;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.100);
+//  overflow: hidden;
 }
 .rotate_left, .rotate_right, .temp_bt{
   position: relative;
-
+}
+.settings_panel{
+  background: transparent;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+}
+.right_settings_panel{
+  right: 0px;
+}
+.left_settings_panel{
+  left: 0px;
+}
+.panel_content{
+  width: 0px;
+  height: 100%;
+  background-color: #808080;
+  position: relative;
+  overflow: hidden;
+  top: 0px;
+  float: left;
+}
+.panel_tab{
+  width: 40px;
+  height: 100%;
+  position: relative;
+  background-color: transparent;
+  float:left;
+}
+.bottom_panel_content{
+  width: 100%;
+  height: 0px;
+  background-color: #808080;
+  position: relative;
+  overflow: hidden;
+  float: left;
+}
+.bottom_panel_tab{
+  width: 100%;
+  height: 40px;
+  position: relative;
+//  background-color: transparent;
+  float:left;
 }

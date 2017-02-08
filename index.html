@@ -8,28 +8,36 @@
     <script src="bower_components/Matter/demo/js/lib/pathseg.js"></script>
     <script src="bower_components/Matter/build/matter.js"></script>
     <script src="static/js/lib/poly-decomp/build/decomp.js"></script>
-
     <title></title>
 </head>
 <body>
 <!--<canvas id="triangle_piece"></canvas>-->
 <!--<canvas id="hexagon_piece"></canvas>-->
-    <div class="start_app">
-        <button class="gt_bt">Start</button>
-        <button class="gt_bt">Quick learning</button>
-    </div>
+    <!--<div class="start_app">-->
+        <!--<button class="gt_bt">Start</button>-->
+        <!--<button class="gt_bt">Quick learning</button>-->
+    <!--</div>-->
     <div class="main_container">
         <canvas id="kaleidoscope"></canvas>
     </div>
-    <div class="rotation_pattern">
-        <!--<div class="stencil"></div>-->
-        <div class="rotation_platform" id="particles_container"></div>
-        <div class="rotate_left"><button id="rotate_left_bt">Left</button></div>
-        <div class="rotate_right"><button id="rotate_right_bt">Right</button></div>
-        <div class="temp_bt"><button id="get_current_piece">GetPiece</button></div>
+    <div class="bottom_panel">
+        <div class="bottom_panel_tab" id="bottom_tab">^</div>
+        <div class="bottom_panel_content">
+            <!--<div class="stencil"></div>-->
+            <div class="rotation_platform" id="particles_container"></div>
+            <!--<div class="rotate_left"><button id="rotate_left_bt">Left</button></div>-->
+            <!--<div class="rotate_right"><button id="rotate_right_bt">Right</button></div>-->
+            <!--<div class="temp_bt"><button id="get_current_piece">GetPiece</button></div>-->
+        </div>
     </div>
-    <div class="right_settings_panel"></div>
-    <div class="left_settings_panel"></div>
+    <div class="settings_panel right_settings_panel">
+        <div class="panel_tab" id="right_tab">-></div>
+        <div class="panel_content" id="right_panel_content">Here will be settings</div>
+    </div>
+    <div class="settings_panel left_settings_panel">
+        <div class="panel_content" id="left_panel_content">Here will be settings</div>
+        <div class="panel_tab" id="left_tab"><-</div>
+    </div>
 <script src="static/js/app.js"></script>
 </body>
 </html>
