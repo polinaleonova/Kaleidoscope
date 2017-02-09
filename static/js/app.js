@@ -17,7 +17,7 @@ $(document).ready(function() {
         mouseDown = false,
         engine_canvas_w_h = 300,
 
-        color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58', '#E6F73C']),
+//        color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58', '#E6F73C']),
         frame_options = {
             isStatic: true,
 //        wireframes: false,
@@ -36,11 +36,10 @@ $(document).ready(function() {
         world = engine.world;
     var elem = document.getElementById('particles_container');
     var engine_canvas = document.createElement('canvas');
-    engine_canvas.setAttribute("id", "engine_canvas");
-
+        engine_canvas.setAttribute("id", "engine_canvas");
     var render = Render.create({
                                    element: elem,
-        canvas: engine_canvas,
+                                   canvas: engine_canvas,
                                    options: render_options,
                                    engine: engine
                                });
@@ -52,7 +51,6 @@ $(document).ready(function() {
         bottom_rectangle = Bodies.rectangle(engine_canvas_w_h/2, rectangle_x1_y1, rectangle_w, rectangle_h, frame_options),
         right_rectangle = Bodies.rectangle(rectangle_x1_y1, engine_canvas_w_h/2, rectangle_h, rectangle_w, frame_options),
         left_rectangle = Bodies.rectangle(rectangle_x0_y0, engine_canvas_w_h/2, rectangle_h, rectangle_w, frame_options),
-
         rectangle_frame = Body.create({
                                           parts: [top_rectangle, bottom_rectangle, right_rectangle, left_rectangle],
                                           isStatic: true
@@ -65,16 +63,32 @@ $(document).ready(function() {
     Engine.run(engine);
 // run the renderer
     Render.run(render);
+    //settings styles for new particles
+    var particle_size, color_fill, color_stroke, particle_shape, stroke_width;
+    setStyleForNewParticles = function(){
+        particle_shape = parseInt($('input[name="particle_shape"]:checked').val());
+        particle_size = parseInt($('#particle_size').val());
+        color_fill = $('#color_fill').val();//get color for new particles
+        color_stroke = $('#color_stroke').val();//get color for new particles stroke,
+        stroke_width = parseInt($('#width_stroke').val());
+    };
+    //end settings styles for new particles
     addParticle = function () {
-        var particle = Bodies.polygon(x, y, 3, 10, {
+        setStyleForNewParticles();
+        var options = {
             density: 5,
             friction: 10,
             wireframes: false,
-            fillStyle: color,
             render: {
-//                opacity: 0.7
+                fillStyle: color_fill,
+                strokeStyle: color_stroke,
+                opacity: 0.7
             }
-        });
+        };
+        if (stroke_width !== 0){
+           options.render.lineWidth = stroke_width
+        };
+        var particle = Bodies.polygon(x, y, particle_shape, particle_size, options);
         World.add(world, particle);
     };
     onMouseDownHandler = function (event) {
@@ -102,10 +116,11 @@ $(document).ready(function() {
         x = event.pageX - parentOffset.left;
         y = event.pageY - parentOffset.top;
     };
-    $('#engine_canvas').on('mousedown', event, onMouseDownHandler);
-    $('#engine_canvas').on('mousemove', event, generateParticlesWhileMouseDown);
-    $('#engine_canvas').on('mouseup', onMouseUpHandler);
-    $('#engine_canvas').on('mouseleave', onMouseUpHandler);
+    var engine_element = $('#engine_canvas');
+        engine_element.on('mousedown', event, onMouseDownHandler);
+        engine_element.on('mousemove', event, generateParticlesWhileMouseDown);
+        engine_element.on('mouseup', onMouseUpHandler);
+        engine_element.on('mouseleave', onMouseUpHandler);
 //Matter js engine logic end
 
 //left and right buttons logic
@@ -270,12 +285,18 @@ Events.on(engine, "afterUpdate", function(){
 //end getting the image from current state of particles area
 });
 //show or hide settins panels
-var bottom_panel = $('.bottom_panel_content');
-$('.settings_panel').hover(function(){
-    $(this).find('.panel_content').animate({width:"300"},1000)
-    },function(){
-    $(this).find('.panel_content').animate({width:"0"},1000)});
+
+$('.panel_tab').on('click', function(){
+    var current_panel_content = $(this).parent().find('.panel_content');
+    if (current_panel_content.css('width') == "0px"){
+        current_panel_content.animate({width:"300"},1000)
+    }
+    else{
+        current_panel_content.animate({width:"0"},1000)
+    }
+});
 $('.bottom_panel_tab').on('click',function(){
+    var bottom_panel = $('.bottom_panel_content');
     if (bottom_panel.css('height') == "0px"){
         bottom_panel.animate({height:"300"},1000)
     }else{
@@ -284,6 +305,7 @@ $('.bottom_panel_tab').on('click',function(){
 });
 //end
 //buttons for rotation render canvas with variable speed
+
 //
 
 
