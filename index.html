@@ -21,48 +21,55 @@
     <div class="main_container">
         <canvas id="kaleidoscope"></canvas>
     </div>
-    <div class="bottom_panel">
-        <div class="bottom_panel_tab" id="bottom_tab">^</div>
-        <div class="bottom_panel_content">
+    <!--<div class="bottom_panel">-->
+        <!--<div class="bottom_panel_tab" id="bottom_tab">^</div>-->
+        <!--<div class="bottom_panel_content">-->
             <!--<div class="stencil"></div>-->
-            <div class="rotation_platform" id="particles_container"></div>
+            <!--<div class="rotation_platform" id="particles_container"></div>-->
             <!--<div class="rotate_left"><button id="rotate_left_bt">Left</button></div>-->
             <!--<div class="rotate_right"><button id="rotate_right_bt">Right</button></div>-->
             <!--<div class="temp_bt"><button id="get_current_piece">GetPiece</button></div>-->
-        </div>
-    </div>
+        <!--</div>-->
+    <!--</div>-->
     <div class="settings_panel right_settings_panel">
         <div class="panel_tab" id="right_tab">-></div>
-        <div class="panel_content" id="right_panel_content">Here will be settings
+        <div class="panel_content" id="right_panel_content">
+            <div class="rotation_platform" id="particles_container"></div>
         </div>
     </div>
     <div class="settings_panel left_settings_panel">
-        <div class="panel_content" id="left_panel_content">Here will be settings
-            <div>
-                <label class="color_picker_title"><input name="particle_shape" type="radio" class="input_shape color_picker" value="2" checked>Circle</label>
-                <label class="color_picker_title"><input name="particle_shape" type="radio" class="input_shape color_picker" value="3">Triangle</label>
-                <label class="color_picker_title"><input name="particle_shape" type="radio" class="input_shape color_picker" value="4">Square</label>
-                Particle Shape
+        <div class="panel_content" id="left_panel_content">
+            <div class="setting_container">
+                <fieldset class="setting_block">
+                    <legend>Canvas Color</legend>
+                    <input id="color_canvas" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
+                    borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+                </fieldset>
+                <fieldset class="setting_block">
+                    <legend>Particle Shape</legend>
+                    <label class="radio_block"><input name="particle_shape" type="radio" class="input_shape" value="2" checked>Circle</label>
+                    <label class="radio_block"><input name="particle_shape" type="radio" class="input_shape" value="3">Triangle</label>
+                    <label class="radio_block"><input name="particle_shape" type="radio" class="input_shape" value="4">Square</label>
+                </fieldset>
+                <fieldset class="setting_block">
+                    <legend>Particle Size</legend>
+                    <input id="particle_size" type="range" min="1" max="50">
+                    </fieldset>
+                <fieldset class="setting_block">
+                    <legend>Fill Color</legend>
+                    <input id="color_fill" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
+                    borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+                    </fieldset>
+                <fieldset class="setting_block">
+                    <legend>Stroke Color</legend>
+                    <input id="color_stroke" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
+                    borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+                    </fieldset>
+                <fieldset class="setting_block">
+                    <legend>Width Stroke</legend>
+                    <input id="width_stroke" type="range" min="0" max="50">
+                    </fieldset>
             </div>
-            <label class="color_picker_title">
-                <input id="particle_size" type="range" min="1" max="50" class="color_picker">
-                Particle Size
-            </label>
-            <label class="color_picker_title">
-                <input id="color_fill" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
-                borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
-                Fill Color
-            </label>
-            <label class="color_picker_title">
-                <input id="color_stroke" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
-                borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
-                Stroke Color
-            </label>
-            <label class="color_picker_title">
-                <input id="width_stroke" type="range" min="0" max="50" class="color_picker">
-                Width Stroke
-            </label>
-
         </div>
         <div class="panel_tab" id="left_tab"><-</div>
     </div>

@@ -1,7 +1,7 @@
 @import "compass";
 
 
-$font-base-family: 'Alegreya', cursive;
+$font-base-family: 'Trirong', cursive;
 $color-font-base: #ee6300;
 $color-font-hover: #eea807;
 
@@ -40,36 +40,13 @@ $color-font-hover: #eea807;
     height: 0px;
   }
 }
+
 html{
   height: 100%;
   overflow: hidden;
 }
 body{
   margin: 0;
-}
-.start_app{
-  background-color: #000000;
-}
-//.element{
-//    transform: rotateZ(30deg);
-//    height: 100px;
-//    width: 100px;
-//    background-color: aquamarine;
-//}
-.rotation_platform{
-//    position: relative;
-  height: inherit;
-  position: absolute;
-  width: 300px;
-  right: 10%;
-}
-.bottom_panel{
-  z-index: 2;
-  position: absolute;
-  bottom: 0px;
-  height: inherit;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.92);
 }
 .main_container{
   position: absolute;
@@ -78,31 +55,63 @@ body{
   top:0;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.100);
-//  overflow: hidden;
 }
+#kaleidoscope{}
+
+//.bottom_panel{
+//  z-index: 2;
+//  position: absolute;
+//  bottom: 0px;
+//  height: inherit;
+//  width: 100%;
+//  background-color: rgba(0, 0, 0, 0.92);
+//}
+//.bottom_panel_tab{
+//  width: 100%;
+//  height: 40px;
+//  position: relative;
+//  float:left;
+//}
+//.bottom_panel_content{
+//  width: 100%;
+//  height: 0px;
+//  background-color: #808080;
+//  position: relative;
+//  overflow: hidden;
+//  float: left;
+//}
 .rotate_left, .rotate_right, .temp_bt{
-  position: relative;
+    position: relative;
+  }
+.rotation_platform{
+  height: inherit;
+  position: absolute;
+  width: 300px;
 }
 .settings_panel{
   background: transparent;
   height: 100%;
   position: absolute;
   top: 0px;
+  @include transition(0.5s ease-in);
 }
 .right_settings_panel{
+    right: -300px;
+}
+.right_panel_show{
   right: 0px;
 }
-.left_settings_panel{
-  left: 0px;
-}
 .panel_content{
-  width: 0px;
+  width: 300px;
   height: 100%;
-  background-color: #808080;
+  background-color: rgba(24, 36, 62, 0.61);
   position: relative;
   overflow: hidden;
   top: 0px;
   float: left;
+}
+.setting_container{
+  padding: 30px 30px 30px 30px;
 }
 .panel_tab{
   width: 40px;
@@ -111,18 +120,44 @@ body{
   background-color: transparent;
   float:left;
 }
-.bottom_panel_content{
-  width: 100%;
-  height: 0px;
-  background-color: #808080;
-  position: relative;
-  overflow: hidden;
-  float: left;
+#right_tab{
+  }
+#right_panel_content{}
+
+.left_settings_panel{
+  left: -300px;
 }
-.bottom_panel_tab{
-  width: 100%;
+.left_panel_show{
+  left: 0px;
+}
+#left_panel_content{}
+fieldset.setting_block {
+  width: 200px;
+  min-height: 60px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border-color: #A0A6AB;
+  @include font-base(18px);
+}
+.radio_block{
+  display: block;
+}
+#color_canvas{}
+input.color_picker{
+  border: none;
+  width: 120px;
   height: 40px;
-  position: relative;
-//  background-color: transparent;
-  float:left;
+  text-align: center;
+  @include font-base(16px);
 }
+
+
+
+
+
+.input_shape{}
+#particle_size{}
+#color_fill{}
+#color_stroke{}
+#width_stroke{}
+
