@@ -63,16 +63,6 @@ $(document).ready(function() {
     Engine.run(engine);
 // run the renderer
     Render.run(render);
-    //settings styles for new particles
-    var particle_size, color_fill, color_stroke, particle_shape, stroke_width;
-    setStyleForNewParticles = function(){
-        particle_shape = parseInt($('input[name="particle_shape"]:checked').val());
-        particle_size = parseInt($('#particle_size').val());
-        color_fill = $('#color_fill').val();//get color for new particles
-        color_stroke = $('#color_stroke').val();//get color for new particles stroke,
-        stroke_width = parseInt($('#width_stroke').val());
-    };
-    //end settings styles for new particles
     addParticle = function () {
         setStyleForNewParticles();
         var options = {
@@ -286,27 +276,49 @@ Events.on(engine, "afterUpdate", function(){
 });
 //show or hide settins panels
 
-$('.panel_tab').on('click', function(){
-    var current_panel_content = $(this).parent().find('.panel_content');
-    if (current_panel_content.css('width') == "0px"){
-        current_panel_content.animate({width:"300"},1000)
-    }
-    else{
-        current_panel_content.animate({width:"0"},1000)
-    }
+//$('.left_panel_tab').on('click', function(){
+//    var current_panel_content = $('#panel_content');
+//    if (current_panel_content.css('left') == "-300px"){
+//        current_panel_content.animate({left:"0"},1000)
+//    }
+//    else{
+//        current_panel_content.animate({left:"-300"},1000)
+//    }
+//});
+$('#left_tab').on('click', function(){
+    $('.left_settings_panel').toggleClass('left_panel_show');
 });
-$('.bottom_panel_tab').on('click',function(){
-    var bottom_panel = $('.bottom_panel_content');
-    if (bottom_panel.css('height') == "0px"){
-        bottom_panel.animate({height:"300"},1000)
-    }else{
-        bottom_panel.animate({height:"0"},1000)
-    }
+$('#right_tab').on('click', function(){
+    $('.right_settings_panel').toggleClass('right_panel_show');
 });
+//$('.bottom_panel_tab').on('click',function(){
+//    var bottom_panel = $('.bottom_panel_content');
+//    if (bottom_panel.css('height') == "0px"){
+//        bottom_panel.animate({height:"300"}, 500, "swing")
+//    }else{
+//        bottom_panel.animate({height:"0"}, 500, "swing")
+//    }
+//});
 //end
 //buttons for rotation render canvas with variable speed
 
 //
+//settings styles for new particles
+var particle_size, color_fill, color_stroke, particle_shape, stroke_width;
+setStyleForNewParticles = function(){
+    particle_shape = parseInt($('input[name="particle_shape"]:checked').val());
+    particle_size = parseInt($('#particle_size').val());
+    color_fill = $('#color_fill').val();//get color for new particles
+    color_stroke = $('#color_stroke').val();//get color for new particles stroke,
+    stroke_width = parseInt($('#width_stroke').val());
+};
+//end settings styles for new particles
+fillColorCanvas = function(){
+    console.log($('#color_canvas').val())
+    var color_canvas = $('#color_canvas').val();
+    $('body').css({'background-color': color_canvas})
+};
+$('#color_canvas').on("change", fillColorCanvas);
 
 
 
