@@ -20,6 +20,7 @@ $(document).ready(function() {
 //        color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58', '#E6F73C']),
         frame_options = {
             isStatic: true,
+            density: 0.01,
 //        wireframes: false,
             render: {
                 visible: true
@@ -46,11 +47,11 @@ $(document).ready(function() {
     var rectangle_w = (engine_canvas_w_h/2)*Math.sqrt(2), // 212
         rectangle_x0_y0 = (engine_canvas_w_h-rectangle_w)/ 2, //44
         rectangle_x1_y1 = rectangle_x0_y0 + rectangle_w, //256
-        rectangle_h = 1;
-    var top_rectangle = Bodies.rectangle(engine_canvas_w_h/2,rectangle_x0_y0 , rectangle_w, rectangle_h, frame_options),
-        bottom_rectangle = Bodies.rectangle(engine_canvas_w_h/2, rectangle_x1_y1, rectangle_w, rectangle_h, frame_options),
-        right_rectangle = Bodies.rectangle(rectangle_x1_y1, engine_canvas_w_h/2, rectangle_h, rectangle_w, frame_options),
-        left_rectangle = Bodies.rectangle(rectangle_x0_y0, engine_canvas_w_h/2, rectangle_h, rectangle_w, frame_options),
+        rectangle_h = 40;
+    var top_rectangle = Bodies.rectangle(engine_canvas_w_h/2,rectangle_x0_y0-20 , rectangle_w+80, rectangle_h, frame_options),
+        bottom_rectangle = Bodies.rectangle(engine_canvas_w_h/2, rectangle_x1_y1+20, rectangle_w+80, rectangle_h, frame_options),
+        right_rectangle = Bodies.rectangle(rectangle_x1_y1+20, engine_canvas_w_h/2, rectangle_h, rectangle_w+80, frame_options),
+        left_rectangle = Bodies.rectangle(rectangle_x0_y0-20, engine_canvas_w_h/2, rectangle_h, rectangle_w+80, frame_options),
         rectangle_frame = Body.create({
                                           parts: [top_rectangle, bottom_rectangle, right_rectangle, left_rectangle],
                                           isStatic: true
@@ -66,18 +67,19 @@ $(document).ready(function() {
     addParticle = function () {
         setStyleForNewParticles();
         var options = {
-            density: 5,
-            friction: 10,
+            density: 0.01,
+            frictionAir: 0.073,
+            friction: 1,
             wireframes: false,
             render: {
                 fillStyle: color_fill,
                 strokeStyle: color_stroke,
-                opacity: 0.7
+                opacity: 1
             }
         };
         if (stroke_width !== 0){
            options.render.lineWidth = stroke_width
-        };
+        }
         var particle = Bodies.polygon(x, y, particle_shape, particle_size, options);
         World.add(world, particle);
     };
@@ -111,6 +113,55 @@ $(document).ready(function() {
         engine_element.on('mousemove', event, generateParticlesWhileMouseDown);
         engine_element.on('mouseup', onMouseUpHandler);
         engine_element.on('mouseleave', onMouseUpHandler);
+    var manual_mode = false;
+    var kaleidoscope = $('#kaleidoscope');
+    var mouse_x, mouse_y ;
+    var prev_degree = 0;
+
+rotateRenderFrame = function(mouse_x, mouse_y) {
+    var offset = kaleidoscope.offset();
+    var curr_degree;
+    var center_x = (offset.left) + (kaleidoscope.width() / 2);
+    var center_y = (offset.top) + (kaleidoscope.height() / 2);
+    var radians = Math.atan2(mouse_y - center_y, -(mouse_x - center_x));
+    curr_degree = (radians * (180 / Math.PI)+180);
+
+    if (prev_degree < curr_degree){
+       Composite.rotate(rectangle_frame_composite, -0.02, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
+    }
+    else{
+       Composite.rotate(rectangle_frame_composite, 0.02, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
+    }
+    prev_degree = curr_degree;
+};
+manuallyRotateKaleidoscope = function(){
+    manual_mode = true;
+    $('.left_settings_panel').removeClass('left_panel_show');
+    $('.right_settings_panel').removeClass('right_panel_show');
+};
+
+$('#hand_rotation_btn').on('click', manuallyRotateKaleidoscope);
+var getCurrentMousePositionAndCallRotationFunc = function( event){
+    if (manual_mode){
+        mouse_x =  event.pageX;
+        mouse_y =  event.pageY;
+        rotateRenderFrame(mouse_x, mouse_y)
+    }
+};
+var returnFromManualRotationMode = function( event){
+    if (event.button == 2){
+        event.preventDefault();
+        manual_mode = false;
+    }
+};
+//prevent context menu on right mouse button click
+kaleidoscope.bind('contextmenu', function(e) {
+   return false;
+});
+kaleidoscope.on('mousemove', getCurrentMousePositionAndCallRotationFunc);
+//engine_element.on('mousemove', getCurrentMousePositionAndCallRotationFunc);
+kaleidoscope.on('mousedown', returnFromManualRotationMode);
+
 //Matter js engine logic end
 
 //left and right buttons logic
@@ -314,11 +365,8 @@ setStyleForNewParticles = function(){
 };
 //end settings styles for new particles
 fillColorCanvas = function(){
-    console.log($('#color_canvas').val())
     var color_canvas = $('#color_canvas').val();
     $('body').css({'background-color': color_canvas})
 };
 $('#color_canvas').on("change", fillColorCanvas);
-
-
 
