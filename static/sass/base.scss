@@ -47,6 +47,7 @@ html{
 }
 body{
   margin: 0;
+  color: #F9C454;
 }
 .main_container{
   position: absolute;
@@ -84,9 +85,25 @@ body{
     position: relative;
   }
 .rotation_platform{
-  height: inherit;
-  position: absolute;
+  height: 300px;
+  position: relative;
   width: 300px;
+}
+#hand_rotation_btn{
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin-top: 10px;
+  margin: auto;
+  display: block;
+  background-image: url("../img/hand_print.gif");
+  opacity: 0.8;
+  background-size: cover;
+  background-color: rgba(220, 220, 220, 0);
+  border: none;
+}
+#hand_rotation_btn:hover{
+  opacity: 1;
 }
 .settings_panel{
   background: transparent;
@@ -136,7 +153,7 @@ fieldset.setting_block {
   min-height: 60px;
   margin-bottom: 20px;
   border-radius: 6px;
-  border-color: #A0A6AB;
+  border-color: #D0BD87;
   @include font-base(18px);
 }
 .radio_block{
