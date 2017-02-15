@@ -7,23 +7,20 @@ $(document).ready(function() {
         Bodies = Matter.Bodies,
         Body = Matter.Body,
         Events = Matter.Events,
-        MouseConstraint = Matter.MouseConstraint,
-        Composite = Matter.Composite,
-        Common = Matter.Common;
+        Composite = Matter.Composite
 
     var x, y,
         interval_particles_creation,
         mouseUp = false,
         mouseDown = false,
         engine_canvas_w_h = 300,
-
 //        color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58', '#E6F73C']),
         frame_options = {
             isStatic: true,
             density: 0.01,
 //        wireframes: false,
             render: {
-                visible: true
+                visible: false
             }
         },
         render_options = {
@@ -65,22 +62,22 @@ $(document).ready(function() {
 // run the renderer
     Render.run(render);
     addParticle = function () {
-        setStyleForNewParticles();
+        var body_parameters = setStyleForNewParticles();
         var options = {
             density: 0.01,
-            frictionAir: 0.073,
-            friction: 1,
+            frictionAir: 0.01,
+            friction: 0.01,
             wireframes: false,
             render: {
-                fillStyle: color_fill,
-                strokeStyle: color_stroke,
-                opacity: 1
+                fillStyle: body_parameters.color_fill,
+                strokeStyle: body_parameters.color_stroke,
+                opacity: 0.7
             }
         };
-        if (stroke_width !== 0){
-           options.render.lineWidth = stroke_width
+        if (body_parameters.stroke_width !== 0){
+           options.render.lineWidth = body_parameters.stroke_width
         }
-        var particle = Bodies.polygon(x, y, particle_shape, particle_size, options);
+        var particle = Bodies.polygon(x, y, body_parameters.particle_shape, body_parameters.particle_size, options);
         World.add(world, particle);
     };
     onMouseDownHandler = function (event) {
@@ -354,19 +351,80 @@ $('#right_tab').on('click', function(){
 //buttons for rotation render canvas with variable speed
 
 //
+//set attributes dom elements
+var min_particle_size = 5,
+    max_particle_size = 50,
+    min_stroke_width = 0,
+    max_stroke_width = 5;
+$('#particle_size').attr({
+                            min: min_particle_size,
+                            max: max_particle_size
+                         });
+$('#width_stroke').attr({
+                            min: min_stroke_width,
+                            max: max_stroke_width
+                        });
+
 //settings styles for new particles
-var particle_size, color_fill, color_stroke, particle_shape, stroke_width;
+//var particle_size, color_fill, color_stroke, particle_shape, stroke_width;
 setStyleForNewParticles = function(){
-    particle_shape = parseInt($('input[name="particle_shape"]:checked').val());
-    particle_size = parseInt($('#particle_size').val());
-    color_fill = $('#color_fill').val();//get color for new particles
-    color_stroke = $('#color_stroke').val();//get color for new particles stroke,
-    stroke_width = parseInt($('#width_stroke').val());
+    var current_settings = {};
+    var random_color;
+    var particle_shape_value = $('input[name="particle_shape"]:checked').val();
+    if (particle_shape_value == "random"){
+       current_settings.particle_shape = getRandomShape();
+    }else {
+        current_settings.particle_shape = parseInt(particle_shape_value);
+    }
+    if ($('input[name="get_random_particle_size"]:checked').length > 0){
+         current_settings.particle_size  = Math.floor(Math.random() * ((max_particle_size - min_particle_size)+1) + min_particle_size);
+    }else {
+        current_settings.particle_size = parseInt($('#particle_size').val());
+    }
+    //get color for new particles
+    if ($('input[name="get_random_color_fill"]:checked').length > 0){
+       random_color = getRandomColor();
+       current_settings.color_fill = "#" + random_color;
+    }else{
+        current_settings.color_fill = $('#color_fill').val();
+    }
+    if ($('input[name="get_random_color_stroke"]:checked').length > 0){
+       random_color = getRandomColor();
+       current_settings.color_stroke = "#" + random_color;
+    }else {
+        current_settings.color_stroke = $('#color_stroke').val();//get color for new particles stroke,
+    }
+    if ($('input[name="get_random_stroke_width"]:checked').length > 0){
+         current_settings.stroke_width  = Math.floor(Math.random() * ((max_stroke_width - min_stroke_width)+1) + min_stroke_width);
+    }else {
+        current_settings.stroke_width = parseInt($('#width_stroke').val());
+    }
+    return current_settings
 };
+
+
 //end settings styles for new particles
-fillColorCanvas = function(){
-    var color_canvas = $('#color_canvas').val();
-    $('body').css({'background-color': color_canvas})
+getRandomColor = function() {
+    var letters = '0123456789ABCDEF';
+    var color = '';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];  //example "2ffaa4"
+    }
+    return color;
 };
-$('#color_canvas').on("change", fillColorCanvas);
+getRandomShape =function(){
+    var shapes = [2, 3, 4];
+    var shape = shapes[Math.floor(Math.random()*shapes.length)];
+    return shape
+};
+updateCanvasColor = function(color_canvas){
+    $('body').css({'background-color': '#'+color_canvas})
+};
+setRandomColorCanvas = function() {
+    var color_canvas;
+    color_canvas = getRandomColor();
+    document.getElementById('color_canvas').jscolor.fromString(color_canvas); // styles and value for input
+    updateCanvasColor(color_canvas)
+};
+$('input[name="get_random_color_canvas"]').on('click', setRandomColorCanvas);
 

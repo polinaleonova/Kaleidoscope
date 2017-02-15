@@ -44,32 +44,38 @@
             <div class="setting_container">
                 <fieldset class="setting_block">
                     <legend>Canvas Color</legend>
-                    <input id="color_canvas" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
+                    <input id="color_canvas" class="jscolor color_picker" onchange="updateCanvasColor(this.jscolor)" data-jscolor="{width:300, height:150, position:'right', hash:true,
                     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+                    <input name="get_random_color_canvas" type="button" value="Random">
                 </fieldset>
                 <fieldset class="setting_block">
                     <legend>Particle Shape</legend>
                     <label class="radio_block"><input name="particle_shape" type="radio" class="input_shape" value="2" checked>Circle</label>
                     <label class="radio_block"><input name="particle_shape" type="radio" class="input_shape" value="3">Triangle</label>
                     <label class="radio_block"><input name="particle_shape" type="radio" class="input_shape" value="4">Square</label>
+                    <label class="radio_block"><input name="particle_shape" type="radio" class="input_shape" value="random">Random</label>
                 </fieldset>
                 <fieldset class="setting_block">
                     <legend>Particle Size</legend>
-                    <input id="particle_size" type="range" min="5" max="50">
+                    <input id="particle_size" type="range">
+                    <label class="checkbox_block"><input name="get_random_particle_size" type="checkbox">Random</label>
                     </fieldset>
                 <fieldset class="setting_block">
                     <legend>Fill Color</legend>
                     <input id="color_fill" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
                     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+                    <label class="checkbox_block"><input name="get_random_color_fill" type="checkbox">Random</label>
                     </fieldset>
                 <fieldset class="setting_block">
                     <legend>Stroke Color</legend>
                     <input id="color_stroke" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
                     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+                    <label class="checkbox_block"><input name="get_random_color_stroke" type="checkbox">Random</label>
                     </fieldset>
                 <fieldset class="setting_block">
                     <legend>Width Stroke</legend>
-                    <input id="width_stroke" type="range" min="0" max="5">
+                    <input id="width_stroke" type="range">
+                    <label class="checkbox_block"><input name="get_random_width_stroke" type="checkbox">Random</label>
                     </fieldset>
             </div>
         </div>

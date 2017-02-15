@@ -174,7 +174,7 @@ var jsc = {
 			// IE
 			document.attachEvent('onreadystatechange', function () {
 				if (document.readyState === 'complete') {
-					document.detachEvent('onreadystatechange', arguments.callee);
+					document.detachEvent('onreadystatechange', arguments.call);
 					fireOnce();
 				}
 			})
@@ -402,7 +402,7 @@ var jsc = {
 		var doc = document.documentElement;
 		return [
 			(window.innerWidth || doc.clientWidth),
-			(window.innerHeight || doc.clientHeight),
+			(window.innerHeight || doc.clientHeight)
 		];
 	},
 
