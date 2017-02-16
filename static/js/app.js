@@ -61,6 +61,8 @@ $(document).ready(function() {
     Engine.run(engine);
 // run the renderer
     Render.run(render);
+    var all_particles_composite = Composite.create();
+    World.addComposite(world, all_particles_composite);
     addParticle = function () {
         var body_parameters = setStyleForNewParticles();
         var options = {
@@ -78,7 +80,8 @@ $(document).ready(function() {
            options.render.lineWidth = body_parameters.stroke_width
         }
         var particle = Bodies.polygon(x, y, body_parameters.particle_shape, body_parameters.particle_size, options);
-        World.add(world, particle);
+
+        Composite.add(all_particles_composite, particle);
     };
     onMouseDownHandler = function (event) {
 
@@ -304,7 +307,11 @@ kaleidoscope.on('mousedown', returnFromManualRotationMode);
             createHexagonInPoint(point, hexagon_canvas)
         });
     };
-
+    clearKaleidoscopeCanvas = function(){
+        Composite.clear(all_particles_composite, true);
+        kaleidoscope_ctx.clearRect(0, 0, kaleidoscope_canvas.width, kaleidoscope_canvas.height);
+    };
+    $('#clear_canvas_btn').on('click', clearKaleidoscopeCanvas);
 //    $('#get_current_piece').click(updateKaleidoscopeImg);
     $( window ).resize(function() {
         kaleidoscope_canvas.width = $(document).width();
@@ -339,14 +346,6 @@ $('#left_tab').on('click', function(){
 $('#right_tab').on('click', function(){
     $('.right_settings_panel').toggleClass('right_panel_show');
 });
-//$('.bottom_panel_tab').on('click',function(){
-//    var bottom_panel = $('.bottom_panel_content');
-//    if (bottom_panel.css('height') == "0px"){
-//        bottom_panel.animate({height:"300"}, 500, "swing")
-//    }else{
-//        bottom_panel.animate({height:"0"}, 500, "swing")
-//    }
-//});
 //end
 //buttons for rotation render canvas with variable speed
 
@@ -427,4 +426,5 @@ setRandomColorCanvas = function() {
     updateCanvasColor(color_canvas)
 };
 $('input[name="get_random_color_canvas"]').on('click', setRandomColorCanvas);
+
 
