@@ -7,62 +7,67 @@ $(document).ready(function() {
         Bodies = Matter.Bodies,
         Body = Matter.Body,
         Events = Matter.Events,
-        Composite = Matter.Composite
+        Composite = Matter.Composite;
 
-    var x, y,
-        interval_particles_creation,
-        mouseUp = false,
-        mouseDown = false,
-        engine_canvas_w_h = 300,
-//        color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58', '#E6F73C']),
-        frame_options = {
-            isStatic: true,
-            density: 0.01,
-//        wireframes: false,
-            render: {
-                visible: false
-            }
-        },
+
+    var engine_canvas_w_h = 300,
         render_options = {
             wireframes: false,
             width: engine_canvas_w_h,
             height: engine_canvas_w_h
-        };
+        },
+    engine = Engine.create(), // create an engine
+    world = engine.world;
 
-// create an engine
-    var engine = Engine.create(),
-        world = engine.world;
-    var elem = document.getElementById('particles_container');
+    var cursor_x, cursor_y,
+        interval_particles_creation,
+        interval_rotation_frame,
+        mouseUp = false,
+        mouseDown = false,
+        manual_mode = false,
+        auto_mode = false,
+        kaleidoscope = $('#kaleidoscope'),
+        mouse_x, mouse_y,
+        prev_degree = 0;
+
+    var particles_container = document.getElementById('particles_container');
     var engine_canvas = document.createElement('canvas');
         engine_canvas.setAttribute("id", "engine_canvas");
     var render = Render.create({
-                                   element: elem,
+                                   element: particles_container, // container for engine_canvas
                                    canvas: engine_canvas,
                                    options: render_options,
                                    engine: engine
                                });
-    var rectangle_w = (engine_canvas_w_h/2)*Math.sqrt(2), // 212
+    // run the engine
+    Engine.run(engine);
+    // run the renderer
+    Render.run(render);
+    var rectangle_w = (engine_canvas_w_h/2)*Math.sqrt(2), //212
         rectangle_x0_y0 = (engine_canvas_w_h-rectangle_w)/ 2, //44
         rectangle_x1_y1 = rectangle_x0_y0 + rectangle_w, //256
-        rectangle_h = 40;
-    var top_rectangle = Bodies.rectangle(engine_canvas_w_h/2,rectangle_x0_y0-20 , rectangle_w+80, rectangle_h, frame_options),
-        bottom_rectangle = Bodies.rectangle(engine_canvas_w_h/2, rectangle_x1_y1+20, rectangle_w+80, rectangle_h, frame_options),
-        right_rectangle = Bodies.rectangle(rectangle_x1_y1+20, engine_canvas_w_h/2, rectangle_h, rectangle_w+80, frame_options),
-        left_rectangle = Bodies.rectangle(rectangle_x0_y0-20, engine_canvas_w_h/2, rectangle_h, rectangle_w+80, frame_options),
+        rectangle_h = 20,
+        rectangle_frame_options = {
+            isStatic: true,
+            density: 0.01,
+            render: {
+                visible: true
+            }
+        },
+        top_rectangle = Bodies.rectangle(engine_canvas_w_h/2,rectangle_x0_y0 - rectangle_h/2, rectangle_w+rectangle_h*2, rectangle_h, rectangle_frame_options),
+        bottom_rectangle = Bodies.rectangle(engine_canvas_w_h/2, rectangle_x1_y1+ rectangle_h/2, rectangle_w+rectangle_h*2, rectangle_h, rectangle_frame_options),
+        right_rectangle = Bodies.rectangle(rectangle_x1_y1+rectangle_h/2, engine_canvas_w_h/2, rectangle_h, rectangle_w+rectangle_h*2, rectangle_frame_options),
+        left_rectangle = Bodies.rectangle(rectangle_x0_y0-rectangle_h/2, engine_canvas_w_h/2, rectangle_h, rectangle_w+rectangle_h*2, rectangle_frame_options),
         rectangle_frame = Body.create({
                                           parts: [top_rectangle, bottom_rectangle, right_rectangle, left_rectangle],
                                           isStatic: true
-                                      });
-    var rectangle_frame_composite = Composite.create();
+                                      }),
+        rectangle_frame_composite = Composite.create(),
+        all_particles_composite = Composite.create();
     Composite.add(rectangle_frame_composite, rectangle_frame);
-    World.add(world, rectangle_frame_composite);
-
-// run the engine
-    Engine.run(engine);
-// run the renderer
-    Render.run(render);
-    var all_particles_composite = Composite.create();
+    World.addComposite(world, rectangle_frame_composite);
     World.addComposite(world, all_particles_composite);
+
     addParticle = function () {
         var body_parameters = setStyleForNewParticles();
         var options = {
@@ -79,17 +84,15 @@ $(document).ready(function() {
         if (body_parameters.stroke_width !== 0){
            options.render.lineWidth = body_parameters.stroke_width
         }
-        var particle = Bodies.polygon(x, y, body_parameters.particle_shape, body_parameters.particle_size, options);
-
+        var particle = Bodies.polygon(cursor_x, cursor_y, body_parameters.particle_shape, body_parameters.particle_size, options);
         Composite.add(all_particles_composite, particle);
     };
-    onMouseDownHandler = function (event) {
-
+    addParticleOnMouseDown = function (event) {
         mouseUp = false;
         mouseDown = true;
         var parentOffset = $(this).parent().offset();
-        x = event.pageX - parentOffset.left;
-        y = event.pageY - parentOffset.top;
+        cursor_x = event.pageX - parentOffset.left;
+        cursor_y = event.pageY - parentOffset.top;
         addParticle();
         interval_particles_creation = setInterval(function () {
             addParticle()
@@ -105,105 +108,96 @@ $(document).ready(function() {
             return
         }
         var parentOffset = $(this).parent().offset();
-        x = event.pageX - parentOffset.left;
-        y = event.pageY - parentOffset.top;
+        cursor_x = event.pageX - parentOffset.left;
+        cursor_y = event.pageY - parentOffset.top;
     };
+    // mouse events on engine_element
     var engine_element = $('#engine_canvas');
-        engine_element.on('mousedown', event, onMouseDownHandler);
-        engine_element.on('mousemove', event, generateParticlesWhileMouseDown);
-        engine_element.on('mouseup', onMouseUpHandler);
-        engine_element.on('mouseleave', onMouseUpHandler);
-    var manual_mode = false;
-    var kaleidoscope = $('#kaleidoscope');
-    var mouse_x, mouse_y ;
-    var prev_degree = 0;
+    engine_element.on('mousedown', event, addParticleOnMouseDown);
+    engine_element.on('mousemove', event, generateParticlesWhileMouseDown);
+    engine_element.on('mouseup', onMouseUpHandler);
+    engine_element.on('mouseleave', onMouseUpHandler);
+    //
+    //Auto & Manually rotation modes (TODO: to make one controller for all modes)
+    //manually rotation engine logic
+    rotateRenderFrameOnMouseMove = function(mouse_x, mouse_y) {
+        var offset = kaleidoscope.offset();
+        var curr_degree;
+        var center_x = (offset.left) + (kaleidoscope.width() / 2);
+        var center_y = (offset.top) + (kaleidoscope.height() / 2);
+        var radians = Math.atan2(mouse_y - center_y, -(mouse_x - center_x));
+        curr_degree = (radians * (180 / Math.PI)+180);
 
-rotateRenderFrame = function(mouse_x, mouse_y) {
-    var offset = kaleidoscope.offset();
-    var curr_degree;
-    var center_x = (offset.left) + (kaleidoscope.width() / 2);
-    var center_y = (offset.top) + (kaleidoscope.height() / 2);
-    var radians = Math.atan2(mouse_y - center_y, -(mouse_x - center_x));
-    curr_degree = (radians * (180 / Math.PI)+180);
+        if (prev_degree < curr_degree){
+           Composite.rotate(rectangle_frame_composite, -0.02, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
+        }
+        else{
+           Composite.rotate(rectangle_frame_composite, 0.02, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
+        }
+        prev_degree = curr_degree;
+    };
+    manuallyRotateKaleidoscope = function(){
+        manual_mode = true;
+        auto_mode = false;
+        $('.left_settings_panel').removeClass('left_panel_show');
+        $('.right_settings_panel').removeClass('right_panel_show');
+    };
+    returnFromManualRotationMode = function(event){
+        if (event.button == 2){
+            event.preventDefault();
+            manual_mode = false;
+        }
+    };
+    getCurrentMousePositionAndCallRotationFunc = function( event){
+        if (manual_mode){
+            mouse_x =  event.pageX;
+            mouse_y =  event.pageY;
+            rotateRenderFrameOnMouseMove(mouse_x, mouse_y)
+        }
+    };
 
-    if (prev_degree < curr_degree){
-       Composite.rotate(rectangle_frame_composite, -0.02, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
-    }
-    else{
-       Composite.rotate(rectangle_frame_composite, 0.02, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
-    }
-    prev_degree = curr_degree;
-};
-manuallyRotateKaleidoscope = function(){
-    manual_mode = true;
-    $('.left_settings_panel').removeClass('left_panel_show');
-    $('.right_settings_panel').removeClass('right_panel_show');
-};
+    $('#hand_rotation_btn').on('mousedown', event, manuallyRotateKaleidoscope);
+    //prevent context menu on right mouse button click
+    kaleidoscope.bind('contextmenu', function(e) {
+       return false;
+    });
+    kaleidoscope.on('mousemove', getCurrentMousePositionAndCallRotationFunc);
+    //engine_element.on('mousemove', getCurrentMousePositionAndCallRotationFunc);
+    kaleidoscope.on('mousedown', returnFromManualRotationMode);
 
-$('#hand_rotation_btn').on('click', manuallyRotateKaleidoscope);
-var getCurrentMousePositionAndCallRotationFunc = function( event){
-    if (manual_mode){
-        mouse_x =  event.pageX;
-        mouse_y =  event.pageY;
-        rotateRenderFrame(mouse_x, mouse_y)
-    }
-};
-var returnFromManualRotationMode = function( event){
-    if (event.button == 2){
-        event.preventDefault();
+    //auto rotation engine buttons logic
+    autoRotationEngine = function(){
         manual_mode = false;
-    }
-};
-//prevent context menu on right mouse button click
-kaleidoscope.bind('contextmenu', function(e) {
-   return false;
-});
-kaleidoscope.on('mousemove', getCurrentMousePositionAndCallRotationFunc);
-//engine_element.on('mousemove', getCurrentMousePositionAndCallRotationFunc);
-kaleidoscope.on('mousedown', returnFromManualRotationMode);
-
-//Matter js engine logic end
-
-//left and right buttons logic
-    var interval_rotation_frame_left,
-        interval_rotation_frame_right,
-        left_btn = $('#rotate_left_bt'),
-        right_btn = $('#rotate_right_bt');
-
-    rotateFrameLeft = function () {
-        var degrees = 0.08;
-        Composite.rotate(rectangle_frame_composite, degrees, {x: engine_canvas_w_h/2, y: engine_canvas_w_h/2});
+        auto_mode = true;
+        var current_rate, current_degree;
+        var min_degree_step = 0.08;
+        if (interval_rotation_frame) {
+            clearInterval(interval_rotation_frame);
+            Composite.rotate(rectangle_frame_composite, 0, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
+        }
+        current_rate = parseInt($(this).val());
+        current_degree = current_rate * min_degree_step;
+        if (current_rate != 0) {
+            interval_rotation_frame = setInterval(function () {
+                    if (auto_mode == false){
+                        clearInterval(interval_rotation_frame);
+                    }else{
+                        Composite.rotate(rectangle_frame_composite, current_degree, {x: engine_canvas_w_h / 2, y: engine_canvas_w_h / 2});
+                        }
+            }, 100)
+        }
     };
-    rotateFrameRight = function () {
-        var degrees = -0.08;
-        Composite.rotate(rectangle_frame_composite, degrees, {x: engine_canvas_w_h/2, y: engine_canvas_w_h/2})
-    };
-    left_btn.mouseover(function () {
-        interval_rotation_frame_left = setInterval(function () {
-           rotateFrameLeft()
-       }, 100)
-    });
-    left_btn.mouseleave(function () {
-        clearInterval(interval_rotation_frame_left)
-    });
-    right_btn.mouseover(function () {
-        interval_rotation_frame_right = setInterval(function () {
-            rotateFrameRight()
-        }, 100)
-    });
-    right_btn.mouseleave(function () {
-        clearInterval(interval_rotation_frame_right)
-    });
-//end left and right buttons logic
-//getting the image from current state of particles area
-    getImageFromEngine = function () {
-    };
-    var radius_ins_circle = rectangle_w/2; //106
+    $('.auto_rotation_btns button').on('click', autoRotationEngine);
+
+
+    //getting the image from current state of particles area
+    var radius_ins_circle = rectangle_w/2 - rectangle_h/2; //106
     var triangle_canvas = document.createElement('canvas');
     var triangle_ctx = triangle_canvas.getContext('2d');
         triangle_canvas.setAttribute("id", "triangle_piece");
         triangle_canvas.width = radius_ins_circle*Math.sqrt(3); //triangle width 183
         triangle_canvas.height = triangle_canvas.width*Math.sqrt(3)/2;  //triangle height 159
+    var triangle_x0 = rectangle_x0_y0 + (rectangle_w - rectangle_h - triangle_canvas.height)/2; //57,..
     var triangle_piece_width  = triangle_canvas.width,
         triangle_piece_height = triangle_canvas.height;
 
@@ -269,7 +263,7 @@ kaleidoscope.on('mousedown', returnFromManualRotationMode);
     triangle_ctx.lineTo(triangle_piece_width, triangle_piece_height);
     // clipping the part of engine_canvas_img image to triangle_canvas
     triangle_ctx.clip();
-    triangle_ctx.drawImage(engine_canvas_img, 58.201, 44, triangle_piece_width, triangle_piece_height, 0, 0, triangle_piece_width, triangle_piece_height);
+    triangle_ctx.drawImage(engine_canvas_img, triangle_x0, rectangle_x0_y0, triangle_piece_width, triangle_piece_height, 0, 0, triangle_piece_width, triangle_piece_height);
     return triangle_canvas;
     };
     createIntermediateHexagon = function(triangle_canvas_img){
@@ -281,15 +275,15 @@ kaleidoscope.on('mousedown', returnFromManualRotationMode);
         //clearing canvas
         hexagon_ctx.clearRect(0,0,hexagon_piece_width,hexagon_piece_height);
         hexagon_ctx.save();
-        hexagon_ctx.translate(183, 159);
+        hexagon_ctx.translate(triangle_piece_width, triangle_piece_height);
         for (var i=0; i<3; i++){
             hexagon_ctx.scale(1, -1);
-            hexagon_ctx.drawImage(triangle_canvas_img, 0, 0, triangle_piece_width,triangle_piece_height, -triangle_piece_width/2,0, triangle_piece_width, triangle_piece_height);
+            hexagon_ctx.drawImage(triangle_canvas_img, 0, 0, triangle_piece_width,triangle_piece_height, (-triangle_piece_width)/2-0.5, -0.5, triangle_piece_width+1, triangle_piece_height+1); //-0.5 and +1 - for "gluing" together edges of nearby triangle
             hexagon_ctx.rotate(-120* Math.PI / 180);
             hexagon_ctx.scale(1, -1);
         }
         for (var j=0; j<3; j++){
-            hexagon_ctx.drawImage(triangle_canvas_img, 0, 0, triangle_piece_width, triangle_piece_height, -triangle_piece_width/2, 0, triangle_piece_width, triangle_piece_height);
+            hexagon_ctx.drawImage(triangle_canvas_img, 0, 0, triangle_piece_width,triangle_piece_height, (-triangle_piece_width)/2-0.5, -0.5, triangle_piece_width+1, triangle_piece_height+1);
             hexagon_ctx.rotate(-120* Math.PI / 180);
         }
         hexagon_ctx.restore();
@@ -312,7 +306,6 @@ kaleidoscope.on('mousedown', returnFromManualRotationMode);
         kaleidoscope_ctx.clearRect(0, 0, kaleidoscope_canvas.width, kaleidoscope_canvas.height);
     };
     $('#clear_canvas_btn').on('click', clearKaleidoscopeCanvas);
-//    $('#get_current_piece').click(updateKaleidoscopeImg);
     $( window ).resize(function() {
         kaleidoscope_canvas.width = $(document).width();
         kaleidoscope_canvas.height = $(document).height();
@@ -321,25 +314,15 @@ kaleidoscope.on('mousedown', returnFromManualRotationMode);
 var counter = 0;
 Events.on(engine, "afterUpdate", function(){
     counter += 1;
-    if (counter == 3){
+    if (counter == 3){ // counter value define how will be look the plume of moving particles
         counter = 0;
         updateKaleidoscopeImgOnEngine()
     }
-});
+
 
 //end getting the image from current state of particles area
 });
 //show or hide settins panels
-
-//$('.left_panel_tab').on('click', function(){
-//    var current_panel_content = $('#panel_content');
-//    if (current_panel_content.css('left') == "-300px"){
-//        current_panel_content.animate({left:"0"},1000)
-//    }
-//    else{
-//        current_panel_content.animate({left:"-300"},1000)
-//    }
-//});
 $('#left_tab').on('click', function(){
     $('.left_settings_panel').toggleClass('left_panel_show');
 });
@@ -371,7 +354,7 @@ setStyleForNewParticles = function(){
     var random_color;
     var particle_shape_value = $('input[name="particle_shape"]:checked').val();
     if (particle_shape_value == "random"){
-       current_settings.particle_shape = getRandomShape();
+       current_settings.particle_shape = getRandomNumberFromArray([2, 3, 4]);
     }else {
         current_settings.particle_shape = parseInt(particle_shape_value);
     }
@@ -401,21 +384,6 @@ setStyleForNewParticles = function(){
     return current_settings
 };
 
-
-//end settings styles for new particles
-getRandomColor = function() {
-    var letters = '0123456789ABCDEF';
-    var color = '';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];  //example "2ffaa4"
-    }
-    return color;
-};
-getRandomShape =function(){
-    var shapes = [2, 3, 4];
-    var shape = shapes[Math.floor(Math.random()*shapes.length)];
-    return shape
-};
 updateCanvasColor = function(color_canvas){
     $('body').css({'background-color': '#'+color_canvas})
 };
@@ -426,5 +394,5 @@ setRandomColorCanvas = function() {
     updateCanvasColor(color_canvas)
 };
 $('input[name="get_random_color_canvas"]').on('click', setRandomColorCanvas);
-
+});
 
