@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Alegreya|Taviraj|Trirong" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya|Taviraj|Trirong|Amatic+SC|Pangolin" rel="stylesheet">
     <link rel="stylesheet" href="static/css/base.css">
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/Matter/demo/js/lib/pathseg.js"></script>
@@ -32,11 +32,31 @@
         <!--</div>-->
     <!--</div>-->
     <div class="settings_panel right_settings_panel">
-        <div class="panel_tab" id="right_tab">-></div>
+        <div class="panel_tab" id="right_tab"><span>+</span></div>
         <div class="panel_content" id="right_panel_content">
-            <div class="rotation_platform" id="particles_container"></div>
-            <button id="hand_rotation_btn"></button>
-            <button id="clear_canvas_btn">Clear Canvas</button>
+            <div class="setting_container">
+                <div class="rotation_platform" id="particles_container"></div>
+                <fieldset class="setting_block">
+                    <legend>Auto&Manual Control</legend>
+                    <button id="hand_rotation_btn"></button>
+                    <div class="auto_rotation_btns">
+                        <div class="left_rotation_btns">
+                            <button id="left_fast_bt" value="3"><<<</button>
+                            <button id="left_middle_bt" value="2"><<</button>
+                            <button id="left_slowly_bt" value="1"><</button>
+                        </div>
+                        <div class="stop_rotation">
+                            <button id="stop_bt" value="0">||</button>
+                        </div>
+                        <div class="right_rotation_btns">
+                            <button id="right_slowly_bt" value="-1">></button>
+                            <button id="right_middle_bt" value="-2">>></button>
+                            <button id="right_fast_bt" value="-3">>>></button>
+                        </div>
+                    </div>
+                </fieldset>
+                <button id="clear_canvas_btn">Clear Canvas</button>
+            </div>
         </div>
 
     </div>
@@ -80,8 +100,12 @@
                     </fieldset>
             </div>
         </div>
-        <div class="panel_tab" id="left_tab"><-</div>
+        <div class="panel_tab" id="left_tab">
+            <span>+</span>
+            <!--<img src="static/img/plus_cross.png">-->
+        </div>
     </div>
 <script src="static/js/app.js"></script>
+<script src="static/js/utils.js"></script>
 </body>
 </html>

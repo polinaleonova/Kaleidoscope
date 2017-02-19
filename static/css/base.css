@@ -1,48 +1,24 @@
-@keyframes hide_panel {
+@keyframes plus_to_cross {
   0% {
-    width: 300px;
+    left: 0px;
   }
   100% {
-    width: 0px;
+    left: -30px;
   }
 }
-@keyframes show_panel {
-  0% {
-    width: 0px;
-  }
-  100% {
-    width: 300px;
-  }
-}
-@keyframes show_bottom_panel {
-  0% {
-    height: 0px;
-  }
-  100% {
-    height: 300px;
-  }
-}
-@keyframes hide_bottom_panel {
-  0% {
-    height: 300px;
-  }
-  100% {
-    height: 0px;
-  }
-}
-/* line 44, ../sass/base.scss */
+/* line 52, ../sass/base.scss */
 html {
   height: 100%;
   overflow: hidden;
 }
 
-/* line 48, ../sass/base.scss */
+/* line 56, ../sass/base.scss */
 body {
   margin: 0;
   color: #F9C454;
 }
 
-/* line 52, ../sass/base.scss */
+/* line 60, ../sass/base.scss */
 .main_container {
   position: absolute;
   width: 100%;
@@ -52,25 +28,37 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* line 84, ../sass/base.scss */
+/* line 69, ../sass/base.scss */
 .rotate_left, .rotate_right, .temp_bt {
   position: relative;
 }
 
-/* line 87, ../sass/base.scss */
+/* line 72, ../sass/base.scss */
 .rotation_platform {
-  height: 300px;
+  height: 240px;
+  top: 40px;
   position: relative;
-  width: 300px;
+  width: 240px;
+  overflow: hidden;
+  margin-bottom: 60px;
 }
 
-/* line 92, ../sass/base.scss */
+/* line 80, ../sass/base.scss */
+#engine_canvas {
+  margin: auto;
+  display: block;
+  left: -30px;
+  top: -30px;
+  position: relative;
+}
+
+/* line 87, ../sass/base.scss */
 #hand_rotation_btn {
   width: 60px;
   height: 60px;
   position: relative;
-  margin-top: 10px;
   margin: auto;
+  margin-top: 10px;
   display: block;
   background-image: url("../img/hand_print.gif");
   opacity: 0.8;
@@ -79,12 +67,20 @@ body {
   border: none;
 }
 
-/* line 105, ../sass/base.scss */
+/* line 100, ../sass/base.scss */
 #hand_rotation_btn:hover {
   opacity: 1;
 }
 
-/* line 108, ../sass/base.scss */
+/* line 103, ../sass/base.scss */
+.auto_rotation_btns button {
+  font: 50px 'Amatic SC', cursive;
+  background: transparent;
+  border: none;
+  color: #F9C454;
+}
+
+/* line 109, ../sass/base.scss */
 .settings_panel {
   background: transparent;
   height: 100%;
@@ -96,33 +92,32 @@ body {
   transition: ease-in 0.5s;
 }
 
-/* line 115, ../sass/base.scss */
+/* line 116, ../sass/base.scss */
 .right_settings_panel {
   right: -300px;
 }
 
-/* line 118, ../sass/base.scss */
+/* line 119, ../sass/base.scss */
 .right_panel_show {
   right: 0px;
 }
 
-/* line 121, ../sass/base.scss */
+/* line 122, ../sass/base.scss */
 .panel_content {
   width: 300px;
   height: 100%;
   background-color: rgba(24, 36, 62, 0.61);
-  position: relative;
   overflow: hidden;
   top: 0px;
   float: left;
 }
 
-/* line 130, ../sass/base.scss */
+/* line 131, ../sass/base.scss */
 .setting_container {
   padding: 30px 30px 30px 30px;
 }
 
-/* line 133, ../sass/base.scss */
+/* line 134, ../sass/base.scss */
 .panel_tab {
   width: 40px;
   height: 100%;
@@ -130,37 +125,67 @@ body {
   background-color: transparent;
   float: left;
 }
+/* line 140, ../sass/base.scss */
+.panel_tab span {
+  font-size: 40px;
+  font-weight: bolder;
+  display: block;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  text-align: center;
+  -moz-transition: ease-in 0.5s;
+  -o-transition: ease-in 0.5s;
+  -webkit-transition: ease-in 0.5s;
+  transition: ease-in 0.5s;
+}
 
-/* line 144, ../sass/base.scss */
+/* line 151, ../sass/base.scss */
+.left_panel_show > .panel_tab > span {
+  -moz-transform: translate(-40px) rotate(45deg);
+  -ms-transform: translate(-40px) rotate(45deg);
+  -webkit-transform: translate(-40px) rotate(45deg);
+  transform: translate(-40px) rotate(45deg);
+}
+
+/* line 154, ../sass/base.scss */
+.right_panel_show > .panel_tab > span {
+  -moz-transform: translate(40px) rotate(-45deg);
+  -ms-transform: translate(40px) rotate(-45deg);
+  -webkit-transform: translate(40px) rotate(-45deg);
+  transform: translate(40px) rotate(-45deg);
+}
+
+/* line 161, ../sass/base.scss */
 .left_settings_panel {
   left: -300px;
 }
 
-/* line 147, ../sass/base.scss */
+/* line 164, ../sass/base.scss */
 .left_panel_show {
   left: 0px;
 }
 
-/* line 151, ../sass/base.scss */
+/* line 168, ../sass/base.scss */
 fieldset.setting_block {
-  width: 200px;
+  width: 205px;
   min-height: 60px;
   margin-bottom: 20px;
   border-radius: 6px;
   border-color: #D0BD87;
-  font: 18px "Trirong", cursive;
+  font: 18px "Taviraj", cursive;
 }
 
-/* line 159, ../sass/base.scss */
+/* line 176, ../sass/base.scss */
 .radio_block {
   display: block;
 }
 
-/* line 163, ../sass/base.scss */
+/* line 180, ../sass/base.scss */
 input.color_picker {
   border: none;
   width: 120px;
   height: 40px;
   text-align: center;
-  font: 16px "Trirong", cursive;
+  font: 16px "Taviraj", cursive;
 }
