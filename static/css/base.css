@@ -1,24 +1,16 @@
-@keyframes plus_to_cross {
-  0% {
-    left: 0px;
-  }
-  100% {
-    left: -30px;
-  }
-}
-/* line 52, ../sass/base.scss */
+/* line 10, ../sass/base.scss */
 html {
   height: 100%;
   overflow: hidden;
 }
 
-/* line 56, ../sass/base.scss */
+/* line 14, ../sass/base.scss */
 body {
   margin: 0;
   color: #F9C454;
 }
 
-/* line 60, ../sass/base.scss */
+/* line 18, ../sass/base.scss */
 .main_container {
   position: absolute;
   width: 100%;
@@ -28,12 +20,12 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* line 69, ../sass/base.scss */
+/* line 27, ../sass/base.scss */
 .rotate_left, .rotate_right, .temp_bt {
   position: relative;
 }
 
-/* line 72, ../sass/base.scss */
+/* line 30, ../sass/base.scss */
 .rotation_platform {
   height: 240px;
   top: 40px;
@@ -43,7 +35,7 @@ body {
   margin-bottom: 60px;
 }
 
-/* line 80, ../sass/base.scss */
+/* line 38, ../sass/base.scss */
 #engine_canvas {
   margin: auto;
   display: block;
@@ -52,35 +44,82 @@ body {
   position: relative;
 }
 
-/* line 87, ../sass/base.scss */
+/* line 45, ../sass/base.scss */
+.auto_manual_control > div {
+  width: 30%;
+  float: left;
+}
+
+/* line 49, ../sass/base.scss */
+.left_btns {
+  margin: 0px 5% 0px 0px;
+}
+/* line 51, ../sass/base.scss */
+.left_btns button {
+  float: right;
+}
+
+/* line 55, ../sass/base.scss */
+.right_btns {
+  margin: 0px 0px 0px 5%;
+}
+/* line 57, ../sass/base.scss */
+.right_btns button {
+  float: left;
+}
+
+/* line 61, ../sass/base.scss */
 #hand_rotation_btn {
   width: 60px;
-  height: 60px;
+  height: 70px;
   position: relative;
   margin: auto;
   margin-top: 10px;
   display: block;
   background-image: url("../img/hand_print.gif");
   opacity: 0.8;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: contain;
   background-color: rgba(220, 220, 220, 0);
   border: none;
 }
 
-/* line 100, ../sass/base.scss */
+/* line 75, ../sass/base.scss */
 #hand_rotation_btn:hover {
   opacity: 1;
 }
 
-/* line 103, ../sass/base.scss */
-.auto_rotation_btns button {
-  font: 50px 'Amatic SC', cursive;
+/* line 78, ../sass/base.scss */
+.auto_rotation_btn {
+  height: 40px;
+  font: 40px 'Neuton', cursive;
   background: transparent;
   border: none;
   color: #F9C454;
 }
 
-/* line 109, ../sass/base.scss */
+/* line 85, ../sass/base.scss */
+.auto_rotation_btn span {
+  line-height: 40px;
+  display: table-cell;
+}
+
+/* line 89, ../sass/base.scss */
+.auto_rotation_btn:active, .auto_rotation_btn:hover, .auto_rotation_btn:focus {
+  outline: none;
+  color: #FFDC91;
+}
+
+/* line 93, ../sass/base.scss */
+#stop_bt {
+  width: 100%;
+}
+/* line 95, ../sass/base.scss */
+#stop_bt span {
+  display: block;
+}
+
+/* line 99, ../sass/base.scss */
 .settings_panel {
   background: transparent;
   height: 100%;
@@ -92,17 +131,17 @@ body {
   transition: ease-in 0.5s;
 }
 
-/* line 116, ../sass/base.scss */
+/* line 106, ../sass/base.scss */
 .right_settings_panel {
   right: -300px;
 }
 
-/* line 119, ../sass/base.scss */
+/* line 109, ../sass/base.scss */
 .right_panel_show {
   right: 0px;
 }
 
-/* line 122, ../sass/base.scss */
+/* line 112, ../sass/base.scss */
 .panel_content {
   width: 300px;
   height: 100%;
@@ -112,9 +151,24 @@ body {
   float: left;
 }
 
-/* line 131, ../sass/base.scss */
+/* line 120, ../sass/base.scss */
 .setting_container {
   padding: 30px 30px 30px 30px;
+}
+
+/* line 123, ../sass/base.scss */
+.checkbox_block {
+  display: block;
+}
+
+/* line 126, ../sass/base.scss */
+.range_slider_container {
+  position: relative;
+  width: 190px;
+  float: left;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 
 /* line 134, ../sass/base.scss */
@@ -127,6 +181,7 @@ body {
 }
 /* line 140, ../sass/base.scss */
 .panel_tab span {
+  text-shadow: 1px 1px 0 #5a440c;
   font-size: 40px;
   font-weight: bolder;
   display: block;
@@ -140,7 +195,39 @@ body {
   transition: ease-in 0.5s;
 }
 
-/* line 151, ../sass/base.scss */
+/* line 152, ../sass/base.scss */
+input[type=button] {
+  background: #F9C454;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5YzQ1NCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Q5NzAzOSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9c454), color-stop(100%, #d97039));
+  background: -moz-linear-gradient(top, #f9c454, #d97039);
+  background: -webkit-linear-gradient(top, #f9c454, #d97039);
+  background: linear-gradient(to bottom, #f9c454, #d97039);
+  -webkit-border-radius: 3;
+  -moz-border-radius: 3;
+  border-radius: 3px;
+  border: none;
+  margin-left: 8px;
+  text-shadow: 1px 1px 3px #666666;
+  font-family: "Trirong", cursive;
+  color: #ffffff;
+  font-size: 18px;
+  padding: 5px;
+  text-decoration: none;
+}
+
+/* line 168, ../sass/base.scss */
+input[type=button]:hover {
+  background: #f0c97a;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YwYzk3YSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2YxN2YzZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f0c97a), color-stop(100%, #f17f3f));
+  background: -moz-linear-gradient(top, #f0c97a, #f17f3f);
+  background: -webkit-linear-gradient(top, #f0c97a, #f17f3f);
+  background: linear-gradient(to bottom, #f0c97a, #f17f3f);
+  text-decoration: none;
+}
+
+/* line 173, ../sass/base.scss */
 .left_panel_show > .panel_tab > span {
   -moz-transform: translate(-40px) rotate(45deg);
   -ms-transform: translate(-40px) rotate(45deg);
@@ -148,7 +235,7 @@ body {
   transform: translate(-40px) rotate(45deg);
 }
 
-/* line 154, ../sass/base.scss */
+/* line 176, ../sass/base.scss */
 .right_panel_show > .panel_tab > span {
   -moz-transform: translate(40px) rotate(-45deg);
   -ms-transform: translate(40px) rotate(-45deg);
@@ -156,36 +243,37 @@ body {
   transform: translate(40px) rotate(-45deg);
 }
 
-/* line 161, ../sass/base.scss */
+/* line 183, ../sass/base.scss */
 .left_settings_panel {
   left: -300px;
 }
 
-/* line 164, ../sass/base.scss */
+/* line 186, ../sass/base.scss */
 .left_panel_show {
   left: 0px;
 }
 
-/* line 168, ../sass/base.scss */
+/* line 190, ../sass/base.scss */
 fieldset.setting_block {
   width: 205px;
   min-height: 60px;
   margin-bottom: 20px;
   border-radius: 6px;
+  border: 2px solid;
   border-color: #D0BD87;
-  font: 18px "Taviraj", cursive;
+  font: 18px "Trirong", cursive;
 }
 
-/* line 176, ../sass/base.scss */
+/* line 199, ../sass/base.scss */
 .radio_block {
   display: block;
 }
 
-/* line 180, ../sass/base.scss */
+/* line 203, ../sass/base.scss */
 input.color_picker {
   border: none;
-  width: 120px;
+  width: 110px;
   height: 40px;
   text-align: center;
-  font: 16px "Taviraj", cursive;
+  font: 16px "Trirong", cursive;
 }
