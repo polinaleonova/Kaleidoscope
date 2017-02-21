@@ -2,60 +2,48 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Alegreya|Taviraj|Trirong|Amatic+SC|Pangolin" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya|Taviraj|Trirong|Amatic+SC|Neuton|Pangolin" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/jquery.range.css">
+    <link rel="stylesheet" href="static/css/range_slider.css">
     <link rel="stylesheet" href="static/css/base.css">
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/Matter/demo/js/lib/pathseg.js"></script>
     <script src="bower_components/Matter/build/matter.js"></script>
     <script src="static/js/lib/poly-decomp/build/decomp.js"></script>
     <script src="static/js/lib/jscolor.js"></script>
+    <script src="static/js/lib/jquery.range.js"></script>
     <title></title>
 </head>
 <body>
-<!--<canvas id="triangle_piece"></canvas>-->
-<!--<canvas id="hexagon_piece"></canvas>-->
-    <!--<div class="start_app">-->
-        <!--<button class="gt_bt">Start</button>-->
-        <!--<button class="gt_bt">Quick learning</button>-->
-    <!--</div>-->
     <div class="main_container">
         <canvas id="kaleidoscope"></canvas>
     </div>
-    <!--<div class="bottom_panel">-->
-        <!--<div class="bottom_panel_tab" id="bottom_tab">^</div>-->
-        <!--<div class="bottom_panel_content">-->
-            <!--<div class="stencil"></div>-->
-            <!--<div class="rotation_platform" id="particles_container"></div>-->
-            <!--<div class="rotate_left"><button id="rotate_left_bt">Left</button></div>-->
-            <!--<div class="rotate_right"><button id="rotate_right_bt">Right</button></div>-->
-            <!--<div class="temp_bt"><button id="get_current_piece">GetPiece</button></div>-->
-        <!--</div>-->
-    <!--</div>-->
     <div class="settings_panel right_settings_panel">
         <div class="panel_tab" id="right_tab"><span>+</span></div>
         <div class="panel_content" id="right_panel_content">
             <div class="setting_container">
                 <div class="rotation_platform" id="particles_container"></div>
-                <fieldset class="setting_block">
+                <fieldset class="setting_block ">
                     <legend>Auto&Manual Control</legend>
-                    <button id="hand_rotation_btn"></button>
-                    <div class="auto_rotation_btns">
-                        <div class="left_rotation_btns">
-                            <button id="left_fast_bt" value="3"><<<</button>
-                            <button id="left_middle_bt" value="2"><<</button>
-                            <button id="left_slowly_bt" value="1"><</button>
+                    <div class="auto_manual_control">
+                        <div class="left_btns">
+                            <button class="auto_rotation_btn" id="left_fast_bt" value="3"><span><<<</span></button>
+                            <button class="auto_rotation_btn" id="left_middle_bt" value="2"><span><<</span></button>
+                            <button class="auto_rotation_btn" id="left_slowly_bt" value="1"><span><</span></button>
                         </div>
-                        <div class="stop_rotation">
-                            <button id="stop_bt" value="0">||</button>
+                        <div class="middle_btns stop_rotation">
+                            <button id="hand_rotation_btn"></button>
+                            <button class="auto_rotation_btn" id="stop_bt" value="0"><span>| |</span></button>
                         </div>
-                        <div class="right_rotation_btns">
-                            <button id="right_slowly_bt" value="-1">></button>
-                            <button id="right_middle_bt" value="-2">>></button>
-                            <button id="right_fast_bt" value="-3">>>></button>
+                        <div class="right_btns">
+                            <button class="auto_rotation_btn" id="right_fast_bt" value="-3"><span>>>></span></button>
+                            <button class="auto_rotation_btn" id="right_middle_bt" value="-2"><span>>></span></button>
+                            <button class="auto_rotation_btn" id="right_slowly_bt" value="-1"><span>
+                            ></span></button>
                         </div>
                     </div>
                 </fieldset>
-                <button id="clear_canvas_btn">Clear Canvas</button>
+                <input type="button" id="clear_canvas_btn" value="Clear Canvas">
             </div>
         </div>
 
@@ -78,32 +66,33 @@
                 </fieldset>
                 <fieldset class="setting_block">
                     <legend>Particle Size</legend>
-                    <input id="particle_size" type="range">
+                    <div class="range_slider_container">
+                        <input id="particle_size" type="range" step="1">
+                    </div>
                     <label class="checkbox_block"><input name="get_random_particle_size" type="checkbox">Random</label>
-                    </fieldset>
+                </fieldset>
                 <fieldset class="setting_block">
                     <legend>Fill Color</legend>
                     <input id="color_fill" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
                     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
                     <label class="checkbox_block"><input name="get_random_color_fill" type="checkbox">Random</label>
-                    </fieldset>
+                </fieldset>
                 <fieldset class="setting_block">
                     <legend>Stroke Color</legend>
                     <input id="color_stroke" class="jscolor color_picker" data-jscolor="{width:300, height:150, position:'right', hash:true,
                     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
                     <label class="checkbox_block"><input name="get_random_color_stroke" type="checkbox">Random</label>
-                    </fieldset>
+                </fieldset>
                 <fieldset class="setting_block">
                     <legend>Width Stroke</legend>
-                    <input id="width_stroke" type="range">
+                    <div class="range_slider_container">
+                        <input id="width_stroke" type="range" step="1">
+                    </div>
                     <label class="checkbox_block"><input name="get_random_width_stroke" type="checkbox">Random</label>
-                    </fieldset>
+                </fieldset>
             </div>
         </div>
-        <div class="panel_tab" id="left_tab">
-            <span>+</span>
-            <!--<img src="static/img/plus_cross.png">-->
-        </div>
+        <div class="panel_tab" id="left_tab"><span>+</span></div>
     </div>
 <script src="static/js/app.js"></script>
 <script src="static/js/utils.js"></script>

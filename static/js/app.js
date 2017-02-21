@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 //Matter js engine logic
 // module aliases
@@ -51,7 +52,7 @@ $(document).ready(function() {
             isStatic: true,
             density: 0.01,
             render: {
-                visible: true
+                visible: false
             }
         },
         top_rectangle = Bodies.rectangle(engine_canvas_w_h/2,rectangle_x0_y0 - rectangle_h/2, rectangle_w+rectangle_h*2, rectangle_h, rectangle_frame_options),
@@ -187,7 +188,7 @@ $(document).ready(function() {
             }, 100)
         }
     };
-    $('.auto_rotation_btns button').on('click', autoRotationEngine);
+    $('.auto_rotation_btn').on('click', autoRotationEngine);
 
 
     //getting the image from current state of particles area
@@ -222,7 +223,7 @@ $(document).ready(function() {
     */
         var coordinates_list = [];
         var count_of_triangles_on_x_axis = Math.round(kaleidoscope_canvas.width/triangle_piece_width)+1; // + one hexagon on the right border of window
-        var count_of_triangles_on_y_axis = Math.round(kaleidoscope_canvas.height/triangle_piece_height)+1; // + one hexagon on the bottom border of window
+        var count_of_triangles_on_y_axis = Math.round(kaleidoscope_canvas.height/triangle_piece_height)+2; // + one hexagon on the bottom border of window
         for (var i = 0; i < count_of_triangles_on_x_axis; i++) {
             for (var j = 0; j < count_of_triangles_on_y_axis; j++) {
                 if ((i % 3 == 0) && (j % 2 == 0)) {
@@ -311,14 +312,13 @@ $(document).ready(function() {
         kaleidoscope_canvas.height = $(document).height();
         updateKaleidoscopeImgOnEngine()
     });
-var counter = 0;
-Events.on(engine, "afterUpdate", function(){
-    counter += 1;
-    if (counter == 3){ // counter value define how will be look the plume of moving particles
-        counter = 0;
-        updateKaleidoscopeImgOnEngine()
-    }
-
+    var counter = 0;
+    Events.on(engine, "afterUpdate", function(){
+        counter += 1;
+        if (counter == 3){ // counter value define how will be look the plume of moving particles
+            counter = 0;
+            updateKaleidoscopeImgOnEngine()
+        }
 
 //end getting the image from current state of particles area
 });
@@ -330,23 +330,37 @@ $('#right_tab').on('click', function(){
     $('.right_settings_panel').toggleClass('right_panel_show');
 });
 //end
-//buttons for rotation render canvas with variable speed
-
-//
 //set attributes dom elements
 var min_particle_size = 5,
     max_particle_size = 50,
     min_stroke_width = 0,
     max_stroke_width = 5;
-$('#particle_size').attr({
-                            min: min_particle_size,
-                            max: max_particle_size
-                         });
-$('#width_stroke').attr({
-                            min: min_stroke_width,
-                            max: max_stroke_width
-                        });
-
+$('#particle_size').jRange({
+    from: min_particle_size,
+    to: max_particle_size,
+    step: 1,
+    scale: [min_particle_size, max_particle_size],
+    format: '%s',
+    width: 190,
+    showLabels: true,
+    showScale: false,
+    theme: "theme-orange",
+    snap : true
+})
+   .jRange('setValue', '20');
+$('#width_stroke').jRange({
+    from: min_stroke_width,
+    to: max_stroke_width,
+    step: 1,
+    scale: [min_stroke_width, max_stroke_width],
+    format: '%s',
+    width: 190,
+    showLabels: true,
+    showScale: false,
+    theme: "theme-orange",
+    snap : true
+})
+    .jRange('setValue', '0');
 //settings styles for new particles
 //var particle_size, color_fill, color_stroke, particle_shape, stroke_width;
 setStyleForNewParticles = function(){
@@ -383,7 +397,6 @@ setStyleForNewParticles = function(){
     }
     return current_settings
 };
-
 updateCanvasColor = function(color_canvas){
     $('body').css({'background-color': '#'+color_canvas})
 };
@@ -393,6 +406,7 @@ setRandomColorCanvas = function() {
     document.getElementById('color_canvas').jscolor.fromString(color_canvas); // styles and value for input
     updateCanvasColor(color_canvas)
 };
+setRandomColorCanvas(); //set body background after load page
 $('input[name="get_random_color_canvas"]').on('click', setRandomColorCanvas);
 });
 

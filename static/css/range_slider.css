@@ -1,0 +1,67 @@
+.slider-container {
+  width: 300px;
+  font-family: 'Taviraj', cursive;;
+}
+.slider-container .back-bar .pointer-label {
+  position: absolute;
+  top: -25px;
+  font-size: 16px;
+  background: white;
+  white-space: nowrap;
+  line-height: 1;
+}
+.theme-orange .back-bar {
+  height: 5px;
+  border-radius: 2px;
+  background-color: #eeeeee;
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(top, #eeeeee, #dddddd);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#dddddd));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #dddddd);
+  background-image: -o-linear-gradient(top, #eeeeee, #dddddd);
+  background-image: linear-gradient(to bottom, #eeeeee, #dddddd);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeeeeee', endColorstr='#ffdddddd', GradientType=0);
+}
+.theme-orange .back-bar .selected-bar {
+  border-radius: 2px;
+  background-color: #F9C454;
+  background-image: -moz-linear-gradient(top, #F9C454, #d97039);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F9C454), to(#d97039));
+  background-image: -webkit-linear-gradient(top, #F9C454, #d97039);
+  background-image: -o-linear-gradient(top, #F9C454, #d97039);
+  background-image: linear-gradient(to bottom, #F9C454, #d97039);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffbdfade', endColorstr='#ff76fabc', GradientType=0);
+}
+.theme-orange .back-bar .pointer {
+  width: 14px;
+  height: 14px;
+  top: -5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #AAA;
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(top, #eeeeee, #dddddd);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#dddddd));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #dddddd);
+  background-image: -o-linear-gradient(top, #eeeeee, #dddddd);
+  background-image: linear-gradient(to bottom, #eeeeee, #dddddd);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeeeeee', endColorstr='#ffdddddd', GradientType=0);
+}
+.theme-orange .back-bar .pointer-label {
+  color: #F9C454;
+  background-color: transparent;
+}
+.theme-orange .back-bar .focused {
+  color: #ffc956
+}
+.theme-orange .scale span {
+  border-left: 1px solid #e5e5e5;
+}
+.theme-orange .scale ins {
+  color: #999;
+}
