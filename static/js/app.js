@@ -1,6 +1,3 @@
-$('.left_settings_panel').addClass('left_panel_show');
-$('.right_settings_panel').addClass('right_panel_show');
-
 $(document).ready(function() {
 //Matter js engine logic
 // module aliases
@@ -76,7 +73,7 @@ $(document).ready(function() {
         var options = {
             density: 0.01,
             frictionAir: 0.01,
-            friction: 0.001,
+            friction: 0.9,
             wireframes: false,
             render: {
                 fillStyle: body_parameters.color_fill,
@@ -114,6 +111,9 @@ $(document).ready(function() {
         cursor_x = event.pageX - parentOffset.left;
         cursor_y = event.pageY - parentOffset.top;
     };
+    //show settings panels when page load
+    $('.left_settings_panel').addClass('left_panel_show');
+    $('.right_settings_panel').addClass('right_panel_show');
     // mouse events on engine_element
     var engine_element = $('#engine_canvas');
     engine_element.on('mousedown', event, addParticleOnMouseDown);
