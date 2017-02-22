@@ -1,3 +1,5 @@
+$('.left_settings_panel').addClass('left_panel_show');
+$('.right_settings_panel').addClass('right_panel_show');
 
 $(document).ready(function() {
 //Matter js engine logic
@@ -74,7 +76,7 @@ $(document).ready(function() {
         var options = {
             density: 0.01,
             frictionAir: 0.01,
-            friction: 0.01,
+            friction: 0.001,
             wireframes: false,
             render: {
                 fillStyle: body_parameters.color_fill,
@@ -140,8 +142,6 @@ $(document).ready(function() {
     manuallyRotateKaleidoscope = function(){
         manual_mode = true;
         auto_mode = false;
-        $('.left_settings_panel').removeClass('left_panel_show');
-        $('.right_settings_panel').removeClass('right_panel_show');
     };
     returnFromManualRotationMode = function(event){
         if (event.button == 2){
