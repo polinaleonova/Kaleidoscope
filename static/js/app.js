@@ -73,7 +73,7 @@ $(document).ready(function() {
         var options = {
             density: 0.01,
             frictionAir: 0.01,
-            friction: 0.9,
+            friction: 0.001,
             wireframes: false,
             render: {
                 fillStyle: body_parameters.color_fill,
