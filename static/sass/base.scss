@@ -36,6 +36,12 @@ body{
   overflow: hidden;
   margin-bottom: 60px;
 }
+#triangle_frame{
+  pointer-events:none;
+  position: absolute;
+  top: 80px;
+}
+
 #engine_canvas{
   margin: auto;
   display: block;

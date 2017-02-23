@@ -37,6 +37,13 @@ body {
 }
 
 /* line 39, ../sass/base.scss */
+#triangle_frame {
+  pointer-events: none;
+  position: absolute;
+  top: 80px;
+}
+
+/* line 45, ../sass/base.scss */
 #engine_canvas {
   margin: auto;
   display: block;
@@ -45,31 +52,31 @@ body {
   position: relative;
 }
 
-/* line 46, ../sass/base.scss */
+/* line 52, ../sass/base.scss */
 .auto_manual_control > div {
   width: 30%;
   float: left;
 }
 
-/* line 50, ../sass/base.scss */
+/* line 56, ../sass/base.scss */
 .left_btns {
   margin: 0px 5% 0px 0px;
 }
-/* line 52, ../sass/base.scss */
+/* line 58, ../sass/base.scss */
 .left_btns button {
   float: right;
 }
 
-/* line 56, ../sass/base.scss */
+/* line 62, ../sass/base.scss */
 .right_btns {
   margin: 0px 0px 0px 5%;
 }
-/* line 58, ../sass/base.scss */
+/* line 64, ../sass/base.scss */
 .right_btns button {
   float: left;
 }
 
-/* line 62, ../sass/base.scss */
+/* line 68, ../sass/base.scss */
 #hand_rotation_btn {
   width: 60px;
   height: 70px;
@@ -85,12 +92,12 @@ body {
   border: none;
 }
 
-/* line 76, ../sass/base.scss */
+/* line 82, ../sass/base.scss */
 #hand_rotation_btn:hover {
   opacity: 1;
 }
 
-/* line 79, ../sass/base.scss */
+/* line 85, ../sass/base.scss */
 .auto_rotation_btn {
   height: 40px;
   font: 40px 'Neuton', cursive;
@@ -99,28 +106,28 @@ body {
   color: #F9C454;
 }
 
-/* line 86, ../sass/base.scss */
+/* line 92, ../sass/base.scss */
 .auto_rotation_btn span {
   line-height: 40px;
   display: table-cell;
 }
 
-/* line 90, ../sass/base.scss */
+/* line 96, ../sass/base.scss */
 .auto_rotation_btn:active, .auto_rotation_btn:hover, .auto_rotation_btn:focus {
   outline: none;
   color: #FFDC91;
 }
 
-/* line 94, ../sass/base.scss */
+/* line 100, ../sass/base.scss */
 #stop_bt {
   width: 100%;
 }
-/* line 96, ../sass/base.scss */
+/* line 102, ../sass/base.scss */
 #stop_bt span {
   display: block;
 }
 
-/* line 100, ../sass/base.scss */
+/* line 106, ../sass/base.scss */
 .settings_panel {
   background: transparent;
   height: 100%;
@@ -132,17 +139,17 @@ body {
   transition: ease-in 0.5s;
 }
 
-/* line 107, ../sass/base.scss */
+/* line 113, ../sass/base.scss */
 .right_settings_panel {
   right: -300px;
 }
 
-/* line 110, ../sass/base.scss */
+/* line 116, ../sass/base.scss */
 .right_panel_show {
   right: 0px;
 }
 
-/* line 113, ../sass/base.scss */
+/* line 119, ../sass/base.scss */
 .panel_content {
   width: 300px;
   height: 100%;
@@ -152,17 +159,17 @@ body {
   float: left;
 }
 
-/* line 121, ../sass/base.scss */
+/* line 127, ../sass/base.scss */
 .setting_container {
   padding: 30px 30px 30px 30px;
 }
 
-/* line 124, ../sass/base.scss */
+/* line 130, ../sass/base.scss */
 .checkbox_block {
   display: block;
 }
 
-/* line 127, ../sass/base.scss */
+/* line 133, ../sass/base.scss */
 .range_slider_container {
   position: relative;
   width: 190px;
@@ -172,7 +179,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* line 135, ../sass/base.scss */
+/* line 141, ../sass/base.scss */
 .panel_tab {
   width: 40px;
   height: 100%;
@@ -180,7 +187,7 @@ body {
   background-color: transparent;
   float: left;
 }
-/* line 141, ../sass/base.scss */
+/* line 147, ../sass/base.scss */
 .panel_tab span {
   text-shadow: 1px 1px 0 #5a440c;
   font-size: 40px;
@@ -196,7 +203,7 @@ body {
   transition: ease-in 0.5s;
 }
 
-/* line 153, ../sass/base.scss */
+/* line 159, ../sass/base.scss */
 input[type=button] {
   background: #F9C454;
   background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5YzQ1NCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Q5NzAzOSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
@@ -217,7 +224,7 @@ input[type=button] {
   text-decoration: none;
 }
 
-/* line 169, ../sass/base.scss */
+/* line 175, ../sass/base.scss */
 input[type=button]:hover {
   background: #f0c97a;
   background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YwYzk3YSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2YxN2YzZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
@@ -228,7 +235,7 @@ input[type=button]:hover {
   text-decoration: none;
 }
 
-/* line 174, ../sass/base.scss */
+/* line 180, ../sass/base.scss */
 .left_panel_show > .panel_tab > span {
   -moz-transform: translate(-40px) rotate(45deg);
   -ms-transform: translate(-40px) rotate(45deg);
@@ -236,7 +243,7 @@ input[type=button]:hover {
   transform: translate(-40px) rotate(45deg);
 }
 
-/* line 177, ../sass/base.scss */
+/* line 183, ../sass/base.scss */
 .right_panel_show > .panel_tab > span {
   -moz-transform: translate(40px) rotate(-45deg);
   -ms-transform: translate(40px) rotate(-45deg);
@@ -244,17 +251,17 @@ input[type=button]:hover {
   transform: translate(40px) rotate(-45deg);
 }
 
-/* line 184, ../sass/base.scss */
+/* line 190, ../sass/base.scss */
 .left_settings_panel {
   left: -300px;
 }
 
-/* line 187, ../sass/base.scss */
+/* line 193, ../sass/base.scss */
 .left_panel_show {
   left: 0px;
 }
 
-/* line 191, ../sass/base.scss */
+/* line 197, ../sass/base.scss */
 fieldset.setting_block {
   width: 205px;
   min-height: 60px;
@@ -265,12 +272,12 @@ fieldset.setting_block {
   font: 18px "Trirong", cursive;
 }
 
-/* line 200, ../sass/base.scss */
+/* line 206, ../sass/base.scss */
 .radio_block {
   display: block;
 }
 
-/* line 204, ../sass/base.scss */
+/* line 210, ../sass/base.scss */
 input.color_picker {
   border: none;
   width: 110px;
