@@ -1,6 +1,5 @@
 @import "compass";
 
-//Alegreya|Taviraj|Trirong|Amatic+SC|Pangolin
 $font-base-family: 'Trirong', cursive;
 $color-font-base: #F9C454;
 
@@ -209,7 +208,7 @@ fieldset.setting_block {
 #color_canvas{}
 input.color_picker{
   border: none;
-  width: 110px;
+  width: 100px;
   height: 40px;
   text-align: center;
   @include font-base(16px);
