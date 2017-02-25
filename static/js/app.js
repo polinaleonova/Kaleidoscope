@@ -116,8 +116,8 @@ $(document).ready(function() {
     $('.right_settings_panel').addClass('right_panel_show');
     // mouse events on engine_element
     var engine_element = $('#engine_canvas');
-    engine_element.on('mousedown', event, addParticleOnMouseDown);
-    engine_element.on('mousemove', event, generateParticlesWhileMouseDown);
+    engine_element.on('mousedown', addParticleOnMouseDown);
+    engine_element.on('mousemove', generateParticlesWhileMouseDown);
     engine_element.on('mouseup', onMouseUpHandler);
     engine_element.on('mouseleave', onMouseUpHandler);
     //
@@ -157,7 +157,7 @@ $(document).ready(function() {
         }
     };
 
-    $('#hand_rotation_btn').on('mousedown', event, manuallyRotateKaleidoscope);
+    $('#hand_rotation_btn').on('mousedown', manuallyRotateKaleidoscope);
     //prevent context menu on right mouse button click
     kaleidoscope.bind('contextmenu', function(e) {
        return false;

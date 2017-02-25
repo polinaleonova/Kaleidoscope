@@ -1,17 +1,17 @@
-/* line 10, ../sass/base.scss */
+/* line 9, ../sass/base.scss */
 html {
   height: 100%;
   overflow: hidden;
 }
 
-/* line 14, ../sass/base.scss */
+/* line 13, ../sass/base.scss */
 body {
   height: 100%;
   margin: 0;
   color: #F9C454;
 }
 
-/* line 19, ../sass/base.scss */
+/* line 18, ../sass/base.scss */
 .main_container {
   position: absolute;
   width: 100%;
@@ -21,12 +21,12 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* line 28, ../sass/base.scss */
+/* line 27, ../sass/base.scss */
 .rotate_left, .rotate_right, .temp_bt {
   position: relative;
 }
 
-/* line 31, ../sass/base.scss */
+/* line 30, ../sass/base.scss */
 .rotation_platform {
   height: 240px;
   top: 40px;
@@ -36,14 +36,14 @@ body {
   margin-bottom: 60px;
 }
 
-/* line 39, ../sass/base.scss */
+/* line 38, ../sass/base.scss */
 #triangle_frame {
   pointer-events: none;
   position: absolute;
   top: 80px;
 }
 
-/* line 45, ../sass/base.scss */
+/* line 44, ../sass/base.scss */
 #engine_canvas {
   margin: auto;
   display: block;
@@ -52,31 +52,31 @@ body {
   position: relative;
 }
 
-/* line 52, ../sass/base.scss */
+/* line 51, ../sass/base.scss */
 .auto_manual_control > div {
   width: 30%;
   float: left;
 }
 
-/* line 56, ../sass/base.scss */
+/* line 55, ../sass/base.scss */
 .left_btns {
   margin: 0px 5% 0px 0px;
 }
-/* line 58, ../sass/base.scss */
+/* line 57, ../sass/base.scss */
 .left_btns button {
   float: right;
 }
 
-/* line 62, ../sass/base.scss */
+/* line 61, ../sass/base.scss */
 .right_btns {
   margin: 0px 0px 0px 5%;
 }
-/* line 64, ../sass/base.scss */
+/* line 63, ../sass/base.scss */
 .right_btns button {
   float: left;
 }
 
-/* line 68, ../sass/base.scss */
+/* line 67, ../sass/base.scss */
 #hand_rotation_btn {
   width: 60px;
   height: 70px;
@@ -92,12 +92,12 @@ body {
   border: none;
 }
 
-/* line 82, ../sass/base.scss */
+/* line 81, ../sass/base.scss */
 #hand_rotation_btn:hover {
   opacity: 1;
 }
 
-/* line 85, ../sass/base.scss */
+/* line 84, ../sass/base.scss */
 .auto_rotation_btn {
   height: 40px;
   font: 40px 'Neuton', cursive;
@@ -106,28 +106,28 @@ body {
   color: #F9C454;
 }
 
-/* line 92, ../sass/base.scss */
+/* line 91, ../sass/base.scss */
 .auto_rotation_btn span {
   line-height: 40px;
   display: table-cell;
 }
 
-/* line 96, ../sass/base.scss */
+/* line 95, ../sass/base.scss */
 .auto_rotation_btn:active, .auto_rotation_btn:hover, .auto_rotation_btn:focus {
   outline: none;
   color: #FFDC91;
 }
 
-/* line 100, ../sass/base.scss */
+/* line 99, ../sass/base.scss */
 #stop_bt {
   width: 100%;
 }
-/* line 102, ../sass/base.scss */
+/* line 101, ../sass/base.scss */
 #stop_bt span {
   display: block;
 }
 
-/* line 106, ../sass/base.scss */
+/* line 105, ../sass/base.scss */
 .settings_panel {
   background: transparent;
   height: 100%;
@@ -139,17 +139,17 @@ body {
   transition: ease-in 0.5s;
 }
 
-/* line 113, ../sass/base.scss */
+/* line 112, ../sass/base.scss */
 .right_settings_panel {
   right: -300px;
 }
 
-/* line 116, ../sass/base.scss */
+/* line 115, ../sass/base.scss */
 .right_panel_show {
   right: 0px;
 }
 
-/* line 119, ../sass/base.scss */
+/* line 118, ../sass/base.scss */
 .panel_content {
   width: 300px;
   height: 100%;
@@ -159,17 +159,17 @@ body {
   float: left;
 }
 
-/* line 127, ../sass/base.scss */
+/* line 126, ../sass/base.scss */
 .setting_container {
   padding: 30px 30px 30px 30px;
 }
 
-/* line 130, ../sass/base.scss */
+/* line 129, ../sass/base.scss */
 .checkbox_block {
   display: block;
 }
 
-/* line 133, ../sass/base.scss */
+/* line 132, ../sass/base.scss */
 .range_slider_container {
   position: relative;
   width: 190px;
@@ -179,7 +179,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* line 141, ../sass/base.scss */
+/* line 140, ../sass/base.scss */
 .panel_tab {
   width: 40px;
   height: 100%;
@@ -187,7 +187,7 @@ body {
   background-color: transparent;
   float: left;
 }
-/* line 147, ../sass/base.scss */
+/* line 146, ../sass/base.scss */
 .panel_tab span {
   text-shadow: 1px 1px 0 #5a440c;
   font-size: 40px;
@@ -203,7 +203,7 @@ body {
   transition: ease-in 0.5s;
 }
 
-/* line 159, ../sass/base.scss */
+/* line 158, ../sass/base.scss */
 input[type=button] {
   background: #F9C454;
   background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5YzQ1NCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Q5NzAzOSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
@@ -224,7 +224,7 @@ input[type=button] {
   text-decoration: none;
 }
 
-/* line 175, ../sass/base.scss */
+/* line 174, ../sass/base.scss */
 input[type=button]:hover {
   background: #f0c97a;
   background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YwYzk3YSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2YxN2YzZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
@@ -235,7 +235,7 @@ input[type=button]:hover {
   text-decoration: none;
 }
 
-/* line 180, ../sass/base.scss */
+/* line 179, ../sass/base.scss */
 .left_panel_show > .panel_tab > span {
   -moz-transform: translate(-40px) rotate(45deg);
   -ms-transform: translate(-40px) rotate(45deg);
@@ -243,7 +243,7 @@ input[type=button]:hover {
   transform: translate(-40px) rotate(45deg);
 }
 
-/* line 183, ../sass/base.scss */
+/* line 182, ../sass/base.scss */
 .right_panel_show > .panel_tab > span {
   -moz-transform: translate(40px) rotate(-45deg);
   -ms-transform: translate(40px) rotate(-45deg);
@@ -251,17 +251,17 @@ input[type=button]:hover {
   transform: translate(40px) rotate(-45deg);
 }
 
-/* line 190, ../sass/base.scss */
+/* line 189, ../sass/base.scss */
 .left_settings_panel {
   left: -300px;
 }
 
-/* line 193, ../sass/base.scss */
+/* line 192, ../sass/base.scss */
 .left_panel_show {
   left: 0px;
 }
 
-/* line 197, ../sass/base.scss */
+/* line 196, ../sass/base.scss */
 fieldset.setting_block {
   width: 205px;
   min-height: 60px;
@@ -272,15 +272,15 @@ fieldset.setting_block {
   font: 18px "Trirong", cursive;
 }
 
-/* line 206, ../sass/base.scss */
+/* line 205, ../sass/base.scss */
 .radio_block {
   display: block;
 }
 
-/* line 210, ../sass/base.scss */
+/* line 209, ../sass/base.scss */
 input.color_picker {
   border: none;
-  width: 110px;
+  width: 100px;
   height: 40px;
   text-align: center;
   font: 16px "Trirong", cursive;

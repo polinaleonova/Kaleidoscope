@@ -2,4 +2,12 @@ logs/*
 tasks.txt
 nginx.conf
 .idea/
+stylesheets
+ie.scss
+print.scss
+screen.scss
+ie.css
+print.css
+screen.css
+.sass-cache/
 
